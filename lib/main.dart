@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'custom_theme/Custom_Theme.dart';
-import 'pre_theme/Pre_Theme.dart';
+import 'themes/custom_theme/Custom_Theme.dart';
+import 'themes/pre_theme/Pre_Theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +25,17 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.green,
+          textTheme: TextTheme(
+            bodyLarge: TextStyle(fontSize: 20),
+            bodyMedium: TextStyle(fontSize: 16),
+            bodySmall: TextStyle(fontSize: 15),
+            displayLarge: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 56),
+            displayMedium: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 36),
+            displaySmall: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+          ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -54,8 +65,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, dynamic> themeOptions = {
-    "PRE": {"id": 1, "name": "Pre-designed theme", "steps": CustomTheme()},
-    "CUSTOM": {"id": 2, "name": "Customize each future", "steps": PreTheme()}
+    "PRE": {"id": 1, "name": "Pre-designed theme", "steps": PreTheme()},
+    "CUSTOM": {"id": 2, "name": "Customize each future", "steps": CustomTheme()}
   };
   int activeThemeOption = 2;
   String activeTheme = "";

@@ -12,6 +12,7 @@ class CustomTheme extends StatefulWidget {
 
 class _CustomThemeState extends State<CustomTheme> {
   List<String> colors = [
+    "",
     "primary",
     "accent",
     "card",
@@ -31,7 +32,7 @@ class _CustomThemeState extends State<CustomTheme> {
   ];
   List<String> fonts = GoogleFonts.asMap().keys.toList();
 
-  String colorSelectableItem = "primary";
+  String colorSelectableItem = "";
   String selectableFont = "Abel";
   Color selectable = Colors.blue;
 
@@ -121,7 +122,7 @@ class _CustomThemeState extends State<CustomTheme> {
             child: Center(
               child: Text(
                 "Colors",
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
           ),
@@ -129,74 +130,93 @@ class _CustomThemeState extends State<CustomTheme> {
             height: 50,
           ),
           Center(
-            child: DropdownButton(
-                value: colorSelectableItem,
-                items: colors
-                    .map((color) => DropdownMenuItem(
-                          child: Text(color),
-                          value: color,
-                        ))
-                    .toList(),
-                onChanged: (item) => {
-                      setState(() => {colorSelectableItem = item!}),
-                      showDialog(
-                          context: context,
-                          builder: (builder) {
-                            return AlertDialog(
-                                actions: [],
-                                title: Row(children: [
-                                  Text("Color: $item"),
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(Icons.close_outlined),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  ),
-                                ]),
-                                content: Column(children: [
-                                  SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 16, right: 16),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              ColorPicker(
-                                                  colorPickerWidth: 100,
-                                                  pickerColor:
-                                                      chosenColors[item]!,
-                                                  onColorChanged: (color) =>
-                                                      {selectable = color}),
-                                              SizedBox(width: 100),
-                                              SizedBox(
-                                                  width: 100,
-                                                  child: Text(
-                                                      colorExplanation[item]
-                                                          .toString())),
-                                            ],
-                                          ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Setup colors: "),
+                DropdownButton(
+                    value: colorSelectableItem,
+                    items: colors
+                        .map((color) => DropdownMenuItem(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: color != ""
+                                          ? chosenColors[color]
+                                          : Colors.blue),
+                                  SizedBox(width: 10),
+                                  Text(color),
+                                ],
+                              ),
+                              value: color,
+                            ))
+                        .toList(),
+                    onChanged: (item) => {
+                          setState(() => {colorSelectableItem = item!}),
+                          showDialog(
+                              context: context,
+                              builder: (builder) {
+                                return AlertDialog(
+                                    actions: [],
+                                    title: Row(children: [
+                                      Text("Color: $item"),
+                                      Spacer(),
+                                      IconButton(
+                                        icon: Icon(Icons.close_outlined),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                      ),
+                                    ]),
+                                    content: Column(children: [
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16, right: 16),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  ColorPicker(
+                                                      colorPickerWidth: 100,
+                                                      pickerColor:
+                                                          chosenColors[item]!,
+                                                      onColorChanged: (color) =>
+                                                          {selectable = color}),
+                                                  SizedBox(width: 100),
+                                                  SizedBox(
+                                                      width: 100,
+                                                      child: Text(
+                                                          colorExplanation[item]
+                                                              .toString())),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 200),
+                                            ElevatedButton(
+                                                onPressed: () => {
+                                                      setState(() => {
+                                                            chosenColors[
+                                                                    item!] =
+                                                                selectable
+                                                          }),
+                                                      Navigator.of(context)
+                                                          .pop()
+                                                    },
+                                                child: Text("Save"))
+                                          ],
                                         ),
-                                        SizedBox(height: 200),
-                                        ElevatedButton(
-                                            onPressed: () => {
-                                                  setState(() => {
-                                                        chosenColors[item!] =
-                                                            selectable
-                                                      }),
-                                                  Navigator.of(context).pop()
-                                                },
-                                            child: Text("Save"))
-                                      ],
-                                    ),
-                                  ),
-                                ]));
-                          })
-                    }),
+                                      ),
+                                    ]));
+                              })
+                        }),
+              ],
+            ),
           ),
           Center(
             child: ElevatedButton(
@@ -205,36 +225,49 @@ class _CustomThemeState extends State<CustomTheme> {
             ),
           ),
           Divider(),
-          SizedBox(height: 50),
           Center(
-            child: Text(
-              "Styles",
-              style: Theme.of(context).textTheme.displaySmall,
+            child: Column(
+              children: [
+                Text(
+                  "Styles",
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+              ],
             ),
           ),
-          Center(
-              child: Column(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 50),
-                  Text("Font family used in entire application: "),
-                  Tooltip(
-                    child: DropdownButton(
-                        value: selectableFont,
-                        items: fonts
-                            .map((font) => DropdownMenuItem(
-                                  child: Text(font),
-                                  value: font,
-                                ))
-                            .toList(),
-                        onChanged: (item) => {
-                              setState(() => {selectableFont = item!})
-                            }),
-                    message: "Check www.fonts.google.com",
-                  ),
-                ],
+              Container(
+                padding: EdgeInsets.only(top: 50, left: 50),
+                child: Text(
+                  "Typography",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 50),
+                    Text("Font family: "),
+                    Tooltip(
+                      child: DropdownButton(
+                          value: selectableFont,
+                          items: fonts
+                              .map((font) => DropdownMenuItem(
+                                    child: Text(font),
+                                    value: font,
+                                  ))
+                              .toList(),
+                          onChanged: (item) => {
+                                setState(() => {selectableFont = item!})
+                              }),
+                      message: "Check www.fonts.google.com",
+                    ),
+                  ],
+                ),
               ),
               // Center(
               //   child: SizedBox(
@@ -246,56 +279,121 @@ class _CustomThemeState extends State<CustomTheme> {
               //   ),
               // ),
               SizedBox(height: 20),
-              Text("Make styles for text: "),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0),
+                child: Text("Headlines, normal text ",
+                    style: Theme.of(context).textTheme.bodyMedium),
+              ),
               SizedBox(height: 20),
-              ExpansionPanelList(
-                expansionCallback: (panelIndex, isExpanded) => setState(() =>
-                    stylesExpanded[stylesExpanded.keys.toList()[panelIndex]] =
-                        !isExpanded),
-                children: styles
-                    .map((style) => ExpansionPanel(
-                        headerBuilder: (context, value) =>
-                            ListTile(title: Text(style)),
-                        body: Column(
-                          children: [
-                            Text("This is: " + stylesExplanation[style]!),
-                            SizedBox(
-                                width: 200,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      labelText: "Enter here size: "),
-                                )),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("Is it bold ?"),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+                child: Center(
+                  child: ExpansionPanelList(
+                    expansionCallback: (panelIndex, isExpanded) => setState(
+                        () => stylesExpanded[stylesExpanded.keys
+                            .toList()[panelIndex]] = !isExpanded),
+                    children: styles
+                        .map((style) => ExpansionPanel(
+                            canTapOnHeader: true,
+                            headerBuilder: (context, value) =>
+                                ListTile(title: Text(style)),
+                            body: Column(
                               children: [
-                                Radio(
-                                  groupValue: "YES",
-                                  onChanged: (e) => {},
-                                  value: "some Value",
+                                Text("This is: " + stylesExplanation[style]!),
+                                SizedBox(
+                                    width: 200,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          labelText: "Enter here size: "),
+                                    )),
+                                SizedBox(
+                                  height: 20,
                                 ),
-                                Text("YES"),
-                                Radio(
-                                  groupValue: "NO",
-                                  onChanged: (e) => {},
-                                  value: "some Value",
+                                Text("Is it bold ?"),
+                                SizedBox(
+                                  height: 20,
                                 ),
-                                Text("NO"),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Radio(
+                                      groupValue: "YES",
+                                      onChanged: (e) => {},
+                                      value: "some Value",
+                                    ),
+                                    Text("YES"),
+                                    Radio(
+                                      groupValue: "NO",
+                                      onChanged: (e) => {},
+                                      value: "some Value",
+                                    ),
+                                    Text("NO"),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
+                            isExpanded: stylesExpanded[style]!))
+                        .toList(),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Buttons",
+                          style: Theme.of(context).textTheme.displaySmall),
+                      SizedBox(
+                        width: 250,
+                        child: Column(
+                          children: [
+                            TextField(
+                                decoration: InputDecoration(
+                                    labelText: "Enter here font size: ")),
+                            TextField(
+                                decoration: InputDecoration(
+                                    labelText:
+                                        "Enter here inner size of a button: "))
                           ],
                         ),
-                        isExpanded: stylesExpanded[style]!))
-                    .toList(),
+                      ),
+                      SizedBox(height: 20),
+                      Text("Input Fields",
+                          style: Theme.of(context).textTheme.displaySmall),
+                      SizedBox(height: 10),
+                      Text("Outline border on Input fields"),
+                      Row(
+                        children: [
+                          Radio(
+                            groupValue: "YES",
+                            onChanged: (e) => {},
+                            value: "some Value",
+                          ),
+                          Text("YES"),
+                          Radio(
+                            groupValue: "NO",
+                            onChanged: (e) => {},
+                            value: "some Value",
+                          ),
+                          Text("NO"),
+                        ],
+                      )
+                    ]),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(child: Text("Preview"), onPressed: () => {}),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                      child: Text("Export JSON"), onPressed: () => {}),
+                ],
               )
             ],
-          ))
+          )
         ],
       ),
     );

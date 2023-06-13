@@ -1,7 +1,13 @@
+import 'dart:html';
+import 'dart:typed_data';
+
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/helper/hex_color.dart';
+import 'dart:convert';
+import 'package:file_saver/file_saver_web.dart';
 
 class CustomTheme extends StatefulWidget {
   const CustomTheme({super.key});
@@ -89,6 +95,14 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayMedium": false,
     "displayLarge": false
   };
+  Map<String, dynamic> stylesValues = {
+    "bodySmall": {"fontSize": TextEditingController(), "fontWeight": 300},
+    "bodyMedium": {"fontSize": TextEditingController(), "fontWeight": 300},
+    "bodyLarge": {"fontSize": TextEditingController(), "fontWeight": 300},
+    "displaySmall": {"fontSize": TextEditingController(), "fontWeight": 300},
+    "displayMedium": {"fontSize": TextEditingController(), "fontWeight": 300},
+    "displayLarge": {"fontSize": TextEditingController(), "fontWeight": 300}
+  };
   Map<String, String> stylesExplanation = {
     "bodySmall": "Normal text smallest size - e.g: 10px sized",
     "bodyMedium": "Normal text medium sized - e.g: 16px sized",
@@ -99,6 +113,12 @@ class _CustomThemeState extends State<CustomTheme> {
         "Headline text medium sized e.g: 44px (subtitle of a title)",
     "displayLarge": "Headline text large sized e.g.: 56 px (title)"
   };
+
+  TextEditingController buttonFontSizeController = TextEditingController();
+  TextEditingController buttonPaddingController = TextEditingController();
+
+  int fontWeightActive = 300;
+  bool activeBorderForInputs = false;
 
   void generateJSONColors() {
     Map<String, String> json = {};
@@ -218,12 +238,6 @@ class _CustomThemeState extends State<CustomTheme> {
               ],
             ),
           ),
-          Center(
-            child: ElevatedButton(
-              child: Text("Generate Json For COLORS"),
-              onPressed: () => {generateJSONColors()},
-            ),
-          ),
           Divider(),
           Center(
             child: Column(
@@ -303,6 +317,8 @@ class _CustomThemeState extends State<CustomTheme> {
                                 SizedBox(
                                     width: 200,
                                     child: TextField(
+                                      controller: stylesValues[style]
+                                          ["fontSize"],
                                       decoration: InputDecoration(
                                           labelText: "Enter here size: "),
                                     )),
@@ -317,15 +333,29 @@ class _CustomThemeState extends State<CustomTheme> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Radio(
-                                      groupValue: "YES",
-                                      onChanged: (e) => {},
-                                      value: "some Value",
+                                      groupValue: stylesValues[style]
+                                          ["fontWeight"],
+                                      onChanged: (e) => {
+                                        print(e),
+                                        setState(() => {
+                                              stylesValues[style]
+                                                  ["fontWeight"] = 700
+                                            })
+                                      },
+                                      value: 700,
                                     ),
                                     Text("YES"),
                                     Radio(
-                                      groupValue: "NO",
-                                      onChanged: (e) => {},
-                                      value: "some Value",
+                                      groupValue: stylesValues[style]
+                                          ["fontWeight"],
+                                      onChanged: (e) => {
+                                        print(e),
+                                        setState(() => {
+                                              stylesValues[style]
+                                                  ["fontWeight"] = 300
+                                            })
+                                      },
+                                      value: 300,
                                     ),
                                     Text("NO"),
                                   ],
@@ -350,9 +380,13 @@ class _CustomThemeState extends State<CustomTheme> {
                         child: Column(
                           children: [
                             TextField(
+                                keyboardType: TextInputType.number,
+                                controller: buttonFontSizeController,
                                 decoration: InputDecoration(
                                     labelText: "Enter here font size: ")),
                             TextField(
+                                keyboardType: TextInputType.number,
+                                controller: buttonPaddingController,
                                 decoration: InputDecoration(
                                     labelText:
                                         "Enter here inner size of a button: "))
@@ -367,15 +401,19 @@ class _CustomThemeState extends State<CustomTheme> {
                       Row(
                         children: [
                           Radio(
-                            groupValue: "YES",
-                            onChanged: (e) => {},
-                            value: "some Value",
+                            groupValue: activeBorderForInputs,
+                            onChanged: (e) => {
+                              setState(() => {activeBorderForInputs = e!})
+                            },
+                            value: true,
                           ),
                           Text("YES"),
                           Radio(
-                            groupValue: "NO",
-                            onChanged: (e) => {},
-                            value: "some Value",
+                            groupValue: activeBorderForInputs,
+                            onChanged: (e) => {
+                              setState(() => {activeBorderForInputs = e!})
+                            },
+                            value: false,
                           ),
                           Text("NO"),
                         ],
@@ -389,7 +427,8 @@ class _CustomThemeState extends State<CustomTheme> {
                   ElevatedButton(child: Text("Preview"), onPressed: () => {}),
                   SizedBox(width: 10),
                   ElevatedButton(
-                      child: Text("Export JSON"), onPressed: () => {}),
+                      child: Text("Export JSON"),
+                      onPressed: () => {exportJSON()}),
                 ],
               )
             ],
@@ -397,5 +436,36 @@ class _CustomThemeState extends State<CustomTheme> {
         ],
       ),
     );
+  }
+
+  void exportJSON() async {
+    Map<String, dynamic> json = {};
+    json["Colors"] = chosenColors
+        .map((key, value) => MapEntry(key, HexColor(value.value).toHex()));
+    json["Fonts"] = {};
+    json["Fonts"]["textTheme"] = selectableFont;
+    json["Fonts"]["buttonFontSize"] = buttonFontSizeController.text;
+    json["Fonts"]["buttonPadding"] = buttonPaddingController.text;
+
+    styles.forEach((style) {
+      if (style != null) {
+        json["Fonts"][style] = {};
+        json["Fonts"][style]["fontSize"] = stylesValues[style]["fontSize"].text;
+        json["Fonts"][style]["fontWeight"] = stylesValues[style]["fontWeight"];
+      }
+    });
+    json["Styles"] = {};
+    json["Styles"]["outlineBorderInput"] = activeBorderForInputs;
+
+    String encoded = jsonEncode(json);
+
+    final bytes = utf8.encode(encoded);
+    final blob = Blob([bytes]);
+    final url = Url.createObjectUrlFromBlob(blob);
+
+    AnchorElement anchor = AnchorElement()
+      ..download = "Config.txt"
+      ..href = url;
+    anchor.click();
   }
 }

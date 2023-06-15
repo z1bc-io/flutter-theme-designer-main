@@ -25,7 +25,6 @@ class _CustomThemeState extends State<CustomTheme> {
     "button",
     "buttonText",
     "error",
-    "brightness",
     "primaryContainer",
     "divider"
         "icon",
@@ -40,6 +39,7 @@ class _CustomThemeState extends State<CustomTheme> {
 
   String colorSelectableItem = "";
   String selectableFont = "Abel";
+  String themeSelectableItem = "Bright";
   Color selectable = Colors.blue;
 
   Map<String, Color> chosenColors = {
@@ -47,14 +47,13 @@ class _CustomThemeState extends State<CustomTheme> {
     "accent": Colors.blue,
     "card": Colors.blue,
     "button": Colors.blue,
-    "buttonText": Colors.blue,
+    "buttonText": Colors.white,
     "error": Colors.blue,
-    "brightness": Colors.white,
-    "primaryContainer": Colors.blue,
+    "primaryContainer": Colors.grey,
     "divider": Colors.blue,
     "icon": Colors.blue,
     "radioFill": Colors.blue,
-    "onPrimaryContainer": Colors.blue,
+    "onPrimaryContainer": Color.fromARGB(144, 97, 97, 97),
     "onPrimary": Colors.blue,
     "onSecondary": Colors.blue,
     "onError": Colors.blue,
@@ -68,7 +67,6 @@ class _CustomThemeState extends State<CustomTheme> {
     "button": "Button background color",
     "buttonText": "Button foreground color",
     "error": "Color of the error - unvalidated input",
-    "brightness": "Light / Dark - depending on theme",
     "primaryContainer": "Background Color of the Box component",
     "divider": "Color of the dividing section - line",
     "icon": "Color of the icons inside",
@@ -132,8 +130,10 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayLarge": "Headline text large sized e.g.: 56 px (title)"
   };
 
-  TextEditingController buttonFontSizeController = TextEditingController();
-  TextEditingController buttonPaddingController = TextEditingController();
+  TextEditingController buttonFontSizeController =
+      TextEditingController(text: "16");
+  TextEditingController buttonPaddingController =
+      TextEditingController(text: "20");
 
   int fontWeightActive = 300;
   bool activeBorderForInputs = false;
@@ -276,6 +276,37 @@ class _CustomThemeState extends State<CustomTheme> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Theme",
+                        style: Theme.of(context).textTheme.displaySmall),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          groupValue: themeSelectableItem,
+                          onChanged: (e) => {
+                            setState(() => {themeSelectableItem = e!})
+                          },
+                          value: "Bright",
+                        ),
+                        Text("BRIGHT"),
+                        Radio(
+                          groupValue: themeSelectableItem,
+                          onChanged: (e) => {
+                            setState(() => {themeSelectableItem = e!})
+                          },
+                          value: "Dark",
+                        ),
+                        Text("DARK"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -322,7 +353,7 @@ class _CustomThemeState extends State<CustomTheme> {
                   SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(left: 50.0),
-                    child: Text("Headlines, normal text ",
+                    child: Text("Setup headline, normal text ",
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
                   SizedBox(height: 20),
@@ -470,7 +501,10 @@ class _CustomThemeState extends State<CustomTheme> {
           ))
         : Preview(
             theme: ThemeData(
-                primarySwatch: Colors.yellow,
+                primaryColor: chosenColors["primary"],
+                brightness: themeSelectableItem == "Dark"
+                    ? Brightness.dark
+                    : Brightness.light,
                 accentColor: chosenColors["accent"],
                 cardColor: chosenColors["card"],
                 hoverColor: chosenColors["hover"],
@@ -480,9 +514,12 @@ class _CustomThemeState extends State<CustomTheme> {
                 dividerColor: chosenColors["divider"],
                 elevatedButtonTheme: ElevatedButtonThemeData(
                     style: ElevatedButton.styleFrom(
-                  backgroundColor: chosenColors["button"],
-                  foregroundColor: chosenColors["buttonText"],
-                )),
+                        backgroundColor: chosenColors["button"],
+                        padding: EdgeInsets.all(double.parse(buttonPaddingController.text)),
+                        foregroundColor: chosenColors["buttonText"],
+                        textStyle: TextStyle(
+                            fontSize:
+                                double.parse(buttonFontSizeController.text)))),
                 errorColor: chosenColors["error"],
                 iconTheme: IconThemeData(color: chosenColors["icon"]),
                 textTheme: GoogleFonts.getTextTheme(
@@ -495,19 +532,15 @@ class _CustomThemeState extends State<CustomTheme> {
                                 ? FontWeight.normal
                                 : FontWeight.bold),
                         bodyMedium: TextStyle(
-                            fontSize: double.parse(
-                                stylesValues["bodyMedium"]["fontSize"].text),
-                            fontWeight:
-                                stylesValues["bodyMedium"]["fontWeight"] == 300
-                                    ? FontWeight.normal
-                                    : FontWeight.bold),
-                        bodySmall: TextStyle(
-                            fontSize: double.parse(stylesValues["bodySmall"]["fontSize"].text),
-                            fontWeight: stylesValues["bodySmall"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold),
+                            fontSize: double.parse(stylesValues["bodyMedium"]["fontSize"].text),
+                            fontWeight: stylesValues["bodyMedium"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold),
+                        bodySmall: TextStyle(fontSize: double.parse(stylesValues["bodySmall"]["fontSize"].text), fontWeight: stylesValues["bodySmall"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold),
                         displayLarge: TextStyle(fontSize: double.parse(stylesValues["displayLarge"]["fontSize"].text), fontWeight: stylesValues["displayLarge"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold),
                         displayMedium: TextStyle(fontSize: double.parse(stylesValues["displayMedium"]["fontSize"].text), fontWeight: stylesValues["displayMedium"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold),
                         displaySmall: TextStyle(fontSize: double.parse(stylesValues["displaySmall"]["fontSize"].text), fontWeight: stylesValues["displaySmall"]["fontWeight"] == 300 ? FontWeight.normal : FontWeight.bold)))),
-          );
+            font: selectableFont,
+            onPrimary: chosenColors["onPrimaryContainer"],
+            activeBorderForInputs: activeBorderForInputs);
   }
 
   void exportJSON() async {

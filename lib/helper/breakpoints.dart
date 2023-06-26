@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-enum Sizes { mobile, tablet, large }
-
 class Breakpoints {
-  static Sizes getCurrentDevice(BuildContext context) {
+  static String getCurrentDevice(BuildContext context) {
     if (MediaQuery.of(context).size.width > 768) {
-      return Sizes.large;
+      return "lg";
     } else if (MediaQuery.of(context).size.width > 360 &&
         MediaQuery.of(context).size.width < 768) {
-      return Sizes.tablet;
+      return "md";
     }
-    return Sizes.mobile;
+    return "sm";
   }
 }

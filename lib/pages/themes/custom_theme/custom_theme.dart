@@ -17,9 +17,21 @@ class CustomTheme extends StatefulWidget {
 class _CustomThemeState extends State<CustomTheme> {
   bool isPreviewPageShown = false;
   Map<String, dynamic> breakpointsSettings = {
-    "sm": {"colorsGridSize": 2},
-    "md": {"colorsGridSize": 3},
-    "lg": {"colorsGridSize": 3}
+    "sm": {
+      "colorsGridSize": 2,
+      "colorsPickerWidth": 30,
+      "colorsPickerHeight": 30
+    },
+    "md": {
+      "colorsGridSize": 3,
+      "colorsPickerWidth": 140,
+      "colorsPickerHeight": 40
+    },
+    "lg": {
+      "colorsGridSize": 3,
+      "colorsPickerWidth": 180,
+      "colorsPickerHeight": 40
+    }
   };
   List<String> colors = [
     "primary",
@@ -29,8 +41,8 @@ class _CustomThemeState extends State<CustomTheme> {
     "buttonText",
     "error",
     "primaryContainer",
-    "divider"
-        "icon",
+    "divider",
+    "icon",
     "radioFill",
     "onPrimaryContainer",
     "onPrimary",
@@ -48,23 +60,23 @@ class _CustomThemeState extends State<CustomTheme> {
   Map<String, Color> chosenColors = {
     "primary": Colors.blue,
     "accent": Colors.blue,
-    "card": Colors.blue,
+    "card": Colors.white,
     "button": Colors.blue,
-    "buttonText": Colors.white,
+    "buttonText": Colors.black,
     "error": Colors.blue,
     "primaryContainer": Colors.grey,
     "divider": Colors.blue,
     "icon": Colors.blue,
     "radioFill": Colors.blue,
     "onPrimaryContainer": Color.fromARGB(144, 97, 97, 97),
-    "onPrimary": Colors.blue,
-    "onSecondary": Colors.blue,
+    "onPrimary": Colors.black,
+    "onSecondary": Colors.black,
     "onError": Colors.blue,
     "hover": Colors.blue
   };
   Map<String, String> colorExplanation = {
     "primary":
-        "It is the main color throughout the whole design style. Includes top banner, upload button, input field color",
+        "It is the main color throughout the whole design style. Includes top banner, input field  selected color,",
     "accent": "Secondary color of the app",
     "card": "Color of the component Card",
     "button": "Button background color",
@@ -158,6 +170,11 @@ class _CustomThemeState extends State<CustomTheme> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        AppBar(
+          title: Text("Flutter Designer"),
+          backgroundColor: chosenColors["primary"]!,
+          foregroundColor: chosenColors["onPrimary"],
+        ),
         Container(
           padding: const EdgeInsets.all(20.0),
           child: Center(
@@ -170,6 +187,7 @@ class _CustomThemeState extends State<CustomTheme> {
         Container(
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: Text("Choose color for each setup: ")),
+        SizedBox(height: 30),
         GridView.count(
           crossAxisCount:
               breakpointsSettings[Breakpoints.getCurrentDevice(context)]
@@ -183,17 +201,82 @@ class _CustomThemeState extends State<CustomTheme> {
           children: [
             for (var color in colors) ...[
               Card(
+                color: chosenColors["card"],
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(color),
-                    SizedBox(height: 20),
-                    Text("Desc"),
-                    Container(
-                        width: 10,
-                        height: 10,
-                        color: color != "" ? chosenColors[color] : Colors.blue),
-                    SizedBox(width: 10),
+                    SizedBox(height: 10),
+                    Text(colorExplanation[color] != null
+                        ? colorExplanation[color]!
+                        : "N/A"),
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () => {
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                  actions: [],
+                                  title: Text("$color :: Pick a color:: "),
+                                  content: Column(children: [
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16, right: 16),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ColorPicker(
+                                                    colorPickerWidth: 100,
+                                                    pickerColor:
+                                                        chosenColors[color]!,
+                                                    onColorChanged: (color) =>
+                                                        {selectable = color}),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 50),
+                                          ElevatedButton(
+                                              onPressed: () => {
+                                                    setState(() => {
+                                                          chosenColors[color!] =
+                                                              selectable
+                                                        }),
+                                                    Navigator.of(context).pop()
+                                                  },
+                                              child: Text("Save"))
+                                        ],
+                                      ),
+                                    ),
+                                  ]));
+                            }),
+                      },
+                      child: Container(
+                          width: breakpointsSettings[
+                                  Breakpoints.getCurrentDevice(context)]
+                              ["colorsPickerWidth"],
+                          height: breakpointsSettings[
+                                  Breakpoints.getCurrentDevice(context)]
+                              ["colorsPickerHeight"],
+                          child: Center(
+                            child: Text("Change color",
+                                style: TextStyle(
+                                    color: chosenColors["onPrimaryContainer"])),
+                          ),
+                          color: color != ""
+                              ? Color.fromRGBO(
+                                  chosenColors[color]!.red,
+                                  chosenColors[color]!.green,
+                                  chosenColors[color]!.blue,
+                                  0.95)
+                              : Colors.blue),
+                    ),
                   ],
                 ),
               ),
@@ -221,21 +304,29 @@ class _CustomThemeState extends State<CustomTheme> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    fillColor:
+                        MaterialStateProperty.resolveWith<Color>((states) {
+                      return chosenColors["radioFill"]!;
+                    }),
                     groupValue: themeSelectableItem,
                     onChanged: (e) => {
                       setState(() => {themeSelectableItem = e!})
                     },
                     value: "Bright",
                   ),
-                  Text("BRIGHT"),
+                  Icon(Icons.light_mode, color: chosenColors["icon"]),
                   Radio(
+                    fillColor:
+                        MaterialStateProperty.resolveWith<Color>((states) {
+                      return chosenColors["radioFill"]!;
+                    }),
                     groupValue: themeSelectableItem,
                     onChanged: (e) => {
                       setState(() => {themeSelectableItem = e!})
                     },
                     value: "Dark",
                   ),
-                  Text("DARK"),
+                  Icon(Icons.mode_night, color: chosenColors["icon"]),
                 ],
               ),
             ],
@@ -370,11 +461,15 @@ class _CustomThemeState extends State<CustomTheme> {
                       width: 250,
                       child: Column(
                         children: [
-                          TextField(
-                              keyboardType: TextInputType.number,
-                              controller: buttonFontSizeController,
-                              decoration: InputDecoration(
-                                  labelText: "Enter here font size: ")),
+                          Slider(
+                            onChanged: (value) => {
+                              buttonFontSizeController =
+                                  TextEditingController(text: value.toString()),
+                            },
+                            min: 0,
+                            max: 30,
+                            value: double.parse(buttonFontSizeController.text),
+                          ),
                           TextField(
                               keyboardType: TextInputType.number,
                               controller: buttonPaddingController,
@@ -417,12 +512,18 @@ class _CustomThemeState extends State<CustomTheme> {
               children: [
                 ElevatedButton(
                     child: Text("Preview"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: chosenColors["button"],
+                        foregroundColor: chosenColors["buttonText"]),
                     onPressed: () => {
                           setState(() => {isPreviewPageShown = true})
                         }),
                 SizedBox(width: 10),
                 ElevatedButton(
                     child: Text("Export JSON"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: chosenColors["button"],
+                        foregroundColor: chosenColors["buttonText"]),
                     onPressed: () => {exportJSON()}),
               ],
             )

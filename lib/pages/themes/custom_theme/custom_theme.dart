@@ -19,13 +19,13 @@ class _CustomThemeState extends State<CustomTheme> {
   Map<String, dynamic> breakpointsSettings = {
     "sm": {
       "colorsGridSize": 2,
-      "colorsPickerWidth": 30,
-      "colorsPickerHeight": 30
+      "colorsPickerWidth": 100,
+      "colorsPickerHeight": 100
     },
     "md": {
       "colorsGridSize": 3,
-      "colorsPickerWidth": 140,
-      "colorsPickerHeight": 40
+      "colorsPickerWidth": 100,
+      "colorsPickerHeight": 100,
     },
     "lg": {
       "colorsGridSize": 3,
@@ -195,7 +195,7 @@ class _CustomThemeState extends State<CustomTheme> {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
           childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2),
+              (MediaQuery.of(context).size.height),
           shrinkWrap: true,
           padding: const EdgeInsets.only(left: 40, right: 40),
           children: [
@@ -217,45 +217,33 @@ class _CustomThemeState extends State<CustomTheme> {
                             context: context,
                             builder: (builder) {
                               return AlertDialog(
-                                  actions: [],
-                                  title: Text("$color :: Pick a color:: "),
-                                  content: Column(children: [
-                                    SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 16, right: 16),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                ColorPicker(
-                                                    colorPickerWidth: 100,
-                                                    pickerColor:
-                                                        chosenColors[color]!,
-                                                    onColorChanged: (color) =>
-                                                        {selectable = color}),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height: 50),
-                                          ElevatedButton(
-                                              onPressed: () => {
-                                                    setState(() => {
-                                                          chosenColors[color!] =
-                                                              selectable
-                                                        }),
-                                                    Navigator.of(context).pop()
-                                                  },
-                                              child: Text("Save"))
-                                        ],
-                                      ),
-                                    ),
-                                  ]));
-                            }),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () => {
+                                            setState(() => {
+                                                  chosenColors[color!] =
+                                                      selectable
+                                                }),
+                                            Navigator.of(context).pop()
+                                          },
+                                      child: Text("Save"))
+                                ],
+                                title: Text("$color :: Pick a color:: "),
+                                content: SingleChildScrollView(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16, right: 16),
+                                  child: SizedBox(
+                                    width: 250,
+                                    height: 400,
+                                    child: HueRingPicker(
+                                        pickerColor: chosenColors[color]!,
+                                        onColorChanged: (color) =>
+                                            {selectable = color}),
+                                  ),
+                                )),
+                              );
+                            })
                       },
                       child: Container(
                           width: breakpointsSettings[

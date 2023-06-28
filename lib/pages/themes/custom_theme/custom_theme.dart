@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'dart:html';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/helper/hex_color.dart';
@@ -165,360 +165,421 @@ class _CustomThemeState extends State<CustomTheme> {
 
   @override
   Widget build(BuildContext context) {
-    return SelectionArea(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppBar(
-          title: Text("Flutter Designer"),
-          backgroundColor: chosenColors["primary"]!,
-          foregroundColor: chosenColors["onPrimary"],
-        ),
-        Container(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(
-            child: Text(
-              "Colors",
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-        ),
-        Container(
-            padding: const EdgeInsets.only(left: 40, right: 40),
-            child: Text("Choose color for each setup: ")),
-        SizedBox(height: 30),
-        GridView.count(
-          crossAxisCount:
-              breakpointsSettings[Breakpoints.getCurrentDevice(context)]
-                  ["colorsGridSize"],
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height),
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(left: 40, right: 40),
-          children: [
-            for (var color in colors) ...[
-              Card(
-                color: chosenColors["card"],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(color),
-                    SizedBox(height: 10),
-                    Text(colorExplanation[color] != null
-                        ? colorExplanation[color]!
-                        : "N/A"),
-                    SizedBox(height: 10),
-                    InkWell(
-                      onTap: () => {
-                        showDialog(
-                            context: context,
-                            builder: (builder) {
-                              return AlertDialog(
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () => {
-                                            setState(() => {
-                                                  chosenColors[color!] =
-                                                      selectable
-                                                }),
-                                            Navigator.of(context).pop()
-                                          },
-                                      child: Text("Save"))
-                                ],
-                                title: Text("$color :: Pick a color:: "),
-                                content: SingleChildScrollView(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16, right: 16),
-                                  child: SizedBox(
-                                    width: 250,
-                                    height: 400,
-                                    child: HueRingPicker(
-                                        pickerColor: chosenColors[color]!,
-                                        onColorChanged: (color) =>
-                                            {selectable = color}),
-                                  ),
-                                )),
-                              );
-                            })
-                      },
-                      child: Container(
-                          width: breakpointsSettings[
-                                  Breakpoints.getCurrentDevice(context)]
-                              ["colorsPickerWidth"],
-                          height: breakpointsSettings[
-                                  Breakpoints.getCurrentDevice(context)]
-                              ["colorsPickerHeight"],
-                          child: Center(
-                            child: Text("Change color",
-                                style: TextStyle(
-                                    color: chosenColors["onPrimaryContainer"])),
-                          ),
-                          color: color != ""
-                              ? Color.fromRGBO(
-                                  chosenColors[color]!.red,
-                                  chosenColors[color]!.green,
-                                  chosenColors[color]!.blue,
-                                  0.95)
-                              : Colors.blue),
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Theme Designer',
+        // theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        // primarySwatch: Colors.blue,
+        // textTheme: TextTheme(
+        //   bodyLarge: TextStyle(fontSize: 20),
+        //   bodyMedium: TextStyle(fontSize: 16),
+        //   bodySmall: TextStyle(fontSize: 15),
+        //   displayLarge: TextStyle(
+        //       color: Colors.black,
+        //       fontWeight: FontWeight.bold,
+        //       fontSize: 56),
+        //   displayMedium: TextStyle(
+        //       color: Colors.black,
+        //       fontWeight: FontWeight.bold,
+        //       fontSize: 36),
+        //   displaySmall: TextStyle(
+        //       color: Colors.black,
+        //       fontWeight: FontWeight.bold,
+        //       fontSize: 26),
+        // ),
+        // elevatedButtonTheme: ElevatedButtonThemeData(
+        //     style: ElevatedButton.styleFrom(
+        //         backgroundColor: Colors.blue,
+        //         foregroundColor: Colors.white))),
+        home: Scaffold(
+            body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SelectionArea(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppBar(
+                    title: Text("Flutter Designer"),
+                    backgroundColor: chosenColors["primary"]!,
+                    foregroundColor: chosenColors["onPrimary"],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Center(
+                      child: Text(
+                        "Colors",
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ]
-          ],
-        ),
-        Divider(),
-        Center(
-          child: Column(
-            children: [
-              Text(
-                "Styles",
-                style: Theme.of(context).textTheme.displayMedium,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 50.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Theme", style: Theme.of(context).textTheme.displaySmall),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Radio(
-                    fillColor:
-                        MaterialStateProperty.resolveWith<Color>((states) {
-                      return chosenColors["radioFill"]!;
-                    }),
-                    groupValue: themeSelectableItem,
-                    onChanged: (e) => {
-                      setState(() => {themeSelectableItem = e!})
-                    },
-                    value: "Bright",
                   ),
-                  Icon(Icons.light_mode, color: chosenColors["icon"]),
-                  Radio(
-                    fillColor:
-                        MaterialStateProperty.resolveWith<Color>((states) {
-                      return chosenColors["radioFill"]!;
-                    }),
-                    groupValue: themeSelectableItem,
-                    onChanged: (e) => {
-                      setState(() => {themeSelectableItem = e!})
-                    },
-                    value: "Dark",
-                  ),
-                  Icon(Icons.mode_night, color: chosenColors["icon"]),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 50, left: 50),
-              child: Text(
-                "Typography",
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: 50),
-                  Text("Font family: "),
-                  Tooltip(
-                    child: DropdownButton(
-                        value: selectableFont,
-                        items: fonts
-                            .map((font) => DropdownMenuItem(
-                                  child: Text(font),
-                                  value: font,
-                                ))
-                            .toList(),
-                        onChanged: (item) => {
-                              setState(() => {selectableFont = item!})
-                            }),
-                    message: "Check www.fonts.google.com",
-                  ),
-                ],
-              ),
-            ),
-            // Center(
-            //   child: SizedBox(
-            //     width: 200,
-            //     child: TextField(
-            //       decoration:
-            //           InputDecoration(labelText: "Button font size e.g: 20"),
-            //     ),
-            //   ),
-            // ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0),
-              child: Text("Setup headline, normal text ",
-                  style: Theme.of(context).textTheme.bodyMedium),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0, right: 50.0),
-              child: Center(
-                child: ExpansionPanelList(
-                  expansionCallback: (panelIndex, isExpanded) => setState(() =>
-                      stylesExpanded[stylesExpanded.keys.toList()[panelIndex]] =
-                          !isExpanded),
-                  children: styles
-                      .map((style) => ExpansionPanel(
-                          canTapOnHeader: true,
-                          headerBuilder: (context, value) =>
-                              ListTile(title: Text(style)),
-                          body: Column(
+                  Container(
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      child: Text("Choose color for each setup: ")),
+                  SizedBox(height: 30),
+                  GridView.count(
+                    crossAxisCount: breakpointsSettings[
+                            Breakpoints.getCurrentDevice(context)]
+                        ["colorsGridSize"],
+                    physics: ScrollPhysics(),
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 1.4,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(left: 40, right: 40),
+                    children: [
+                      for (var color in colors) ...[
+                        Card(
+                          color: chosenColors["card"],
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("This is: " + stylesExplanation[style]!),
-                              SizedBox(
-                                  width: 200,
-                                  child: TextField(
-                                    controller: stylesValues[style]["fontSize"],
-                                    decoration: InputDecoration(
-                                        labelText: "Enter here size: "),
-                                  )),
-                              SizedBox(
-                                height: 20,
+                              Text(color),
+                              SizedBox(height: 10),
+                              Text(colorExplanation[color] != null
+                                  ? colorExplanation[color]!
+                                  : "N/A"),
+                              SizedBox(height: 10),
+                              InkWell(
+                                onTap: () => {
+                                  showDialog(
+                                      context: context,
+                                      builder: (builder) {
+                                        return AlertDialog(
+                                          actions: [
+                                            ElevatedButton(
+                                                onPressed: () => {
+                                                      setState(() => {
+                                                            chosenColors[
+                                                                    color!] =
+                                                                selectable
+                                                          }),
+                                                      Navigator.of(context)
+                                                          .pop()
+                                                    },
+                                                child: Text("Save"))
+                                          ],
+                                          title:
+                                              Text("$color :: Pick a color:: "),
+                                          content: SingleChildScrollView(
+                                              child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16, right: 16),
+                                            child: SizedBox(
+                                              width: 250,
+                                              height: 400,
+                                              child: HueRingPicker(
+                                                  pickerColor:
+                                                      chosenColors[color]!,
+                                                  onColorChanged: (color) =>
+                                                      {selectable = color}),
+                                            ),
+                                          )),
+                                        );
+                                      })
+                                },
+                                child: Container(
+                                    width: breakpointsSettings[
+                                        Breakpoints.getCurrentDevice(
+                                            context)]["colorsPickerWidth"],
+                                    height: breakpointsSettings[
+                                        Breakpoints.getCurrentDevice(
+                                            context)]["colorsPickerHeight"],
+                                    child: Center(
+                                      child: Text("Change color",
+                                          style: TextStyle(
+                                              color: chosenColors[
+                                                  "onPrimaryContainer"])),
+                                    ),
+                                    color: color != ""
+                                        ? Color.fromRGBO(
+                                            chosenColors[color]!.red,
+                                            chosenColors[color]!.green,
+                                            chosenColors[color]!.blue,
+                                            0.95)
+                                        : Colors.blue),
                               ),
-                              Text("Is it bold ?"),
+                            ],
+                          ),
+                        ),
+                      ]
+                    ],
+                  ),
+                  Divider(),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Styles",
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Theme",
+                            style: Theme.of(context).textTheme.displaySmall),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Radio(
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (states) {
+                                return chosenColors["radioFill"]!;
+                              }),
+                              groupValue: themeSelectableItem,
+                              onChanged: (e) => {
+                                setState(() => {themeSelectableItem = e!})
+                              },
+                              value: "Bright",
+                            ),
+                            Icon(Icons.light_mode, color: chosenColors["icon"]),
+                            Radio(
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (states) {
+                                return chosenColors["radioFill"]!;
+                              }),
+                              groupValue: themeSelectableItem,
+                              onChanged: (e) => {
+                                setState(() => {themeSelectableItem = e!})
+                              },
+                              value: "Dark",
+                            ),
+                            Icon(Icons.mode_night, color: chosenColors["icon"]),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 50, left: 50),
+                        child: Text(
+                          "Typography",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 50),
+                            Text("Font family: "),
+                            Tooltip(
+                              child: DropdownButton(
+                                  value: selectableFont,
+                                  items: fonts
+                                      .map((font) => DropdownMenuItem(
+                                            child: Text(font),
+                                            value: font,
+                                          ))
+                                      .toList(),
+                                  onChanged: (item) => {
+                                        setState(() => {selectableFont = item!})
+                                      }),
+                              message: "Check www.fonts.google.com",
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Center(
+                      //   child: SizedBox(
+                      //     width: 200,
+                      //     child: TextField(
+                      //       decoration:
+                      //           InputDecoration(labelText: "Button font size e.g: 20"),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50.0),
+                        child: Text("Setup headline, normal text ",
+                            style: Theme.of(context).textTheme.bodyMedium),
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+                        child: Center(
+                          child: ExpansionPanelList(
+                            expansionCallback: (panelIndex, isExpanded) =>
+                                setState(() => stylesExpanded[stylesExpanded
+                                    .keys
+                                    .toList()[panelIndex]] = !isExpanded),
+                            children: styles
+                                .map((style) => ExpansionPanel(
+                                    canTapOnHeader: true,
+                                    headerBuilder: (context, value) =>
+                                        ListTile(title: Text(style)),
+                                    body: Column(
+                                      children: [
+                                        Text("This is: " +
+                                            stylesExplanation[style]!),
+                                        SizedBox(
+                                            width: 200,
+                                            child: TextField(
+                                              controller: stylesValues[style]
+                                                  ["fontSize"],
+                                              decoration: InputDecoration(
+                                                  labelText:
+                                                      "Enter here size: "),
+                                            )),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text("Is it bold ?"),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Radio(
+                                              groupValue: stylesValues[style]
+                                                  ["fontWeight"],
+                                              onChanged: (e) => {
+                                                print(e),
+                                                setState(() => {
+                                                      stylesValues[style]
+                                                          ["fontWeight"] = 700
+                                                    })
+                                              },
+                                              value: 700,
+                                            ),
+                                            Text("YES"),
+                                            Radio(
+                                              groupValue: stylesValues[style]
+                                                  ["fontWeight"],
+                                              onChanged: (e) => {
+                                                print(e),
+                                                setState(() => {
+                                                      stylesValues[style]
+                                                          ["fontWeight"] = 300
+                                                    })
+                                              },
+                                              value: 300,
+                                            ),
+                                            Text("NO"),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    isExpanded: stylesExpanded[style]!))
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Buttons",
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall),
                               SizedBox(
-                                height: 20,
+                                width: 250,
+                                child: Column(
+                                  children: [
+                                    Slider(
+                                      onChanged: (value) => {
+                                        buttonFontSizeController =
+                                            TextEditingController(
+                                                text: value.toString()),
+                                      },
+                                      min: 0,
+                                      max: 30,
+                                      value: double.parse(
+                                          buttonFontSizeController.text),
+                                    ),
+                                    TextField(
+                                        keyboardType: TextInputType.number,
+                                        controller: buttonPaddingController,
+                                        decoration: InputDecoration(
+                                            labelText:
+                                                "Enter here inner size of a button: "))
+                                  ],
+                                ),
                               ),
+                              SizedBox(height: 20),
+                              Text("Input Fields",
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall),
+                              SizedBox(height: 10),
+                              Text("Outline border on Input fields"),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Radio(
-                                    groupValue: stylesValues[style]
-                                        ["fontWeight"],
+                                    groupValue: activeBorderForInputs,
                                     onChanged: (e) => {
-                                      print(e),
-                                      setState(() => {
-                                            stylesValues[style]["fontWeight"] =
-                                                700
-                                          })
+                                      setState(
+                                          () => {activeBorderForInputs = e!})
                                     },
-                                    value: 700,
+                                    value: true,
                                   ),
                                   Text("YES"),
                                   Radio(
-                                    groupValue: stylesValues[style]
-                                        ["fontWeight"],
+                                    groupValue: activeBorderForInputs,
                                     onChanged: (e) => {
-                                      print(e),
-                                      setState(() => {
-                                            stylesValues[style]["fontWeight"] =
-                                                300
-                                          })
+                                      setState(
+                                          () => {activeBorderForInputs = e!})
                                     },
-                                    value: 300,
+                                    value: false,
                                   ),
                                   Text("NO"),
                                 ],
                               )
-                            ],
-                          ),
-                          isExpanded: stylesExpanded[style]!))
-                      .toList(),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Buttons",
-                        style: Theme.of(context).textTheme.displaySmall),
-                    SizedBox(
-                      width: 250,
-                      child: Column(
-                        children: [
-                          Slider(
-                            onChanged: (value) => {
-                              buttonFontSizeController =
-                                  TextEditingController(text: value.toString()),
-                            },
-                            min: 0,
-                            max: 30,
-                            value: double.parse(buttonFontSizeController.text),
-                          ),
-                          TextField(
-                              keyboardType: TextInputType.number,
-                              controller: buttonPaddingController,
-                              decoration: InputDecoration(
-                                  labelText:
-                                      "Enter here inner size of a button: "))
-                        ],
+                            ]),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Text("Input Fields",
-                        style: Theme.of(context).textTheme.displaySmall),
-                    SizedBox(height: 10),
-                    Text("Outline border on Input fields"),
-                    Row(
-                      children: [
-                        Radio(
-                          groupValue: activeBorderForInputs,
-                          onChanged: (e) => {
-                            setState(() => {activeBorderForInputs = e!})
-                          },
-                          value: true,
-                        ),
-                        Text("YES"),
-                        Radio(
-                          groupValue: activeBorderForInputs,
-                          onChanged: (e) => {
-                            setState(() => {activeBorderForInputs = e!})
-                          },
-                          value: false,
-                        ),
-                        Text("NO"),
-                      ],
-                    )
-                  ]),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    child: Text("Preview"),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: chosenColors["button"],
-                        foregroundColor: chosenColors["buttonText"]),
-                    onPressed: () => {
-                          setState(() => {isPreviewPageShown = true})
-                        }),
-                SizedBox(width: 10),
-                ElevatedButton(
-                    child: Text("Export JSON"),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: chosenColors["button"],
-                        foregroundColor: chosenColors["buttonText"]),
-                    onPressed: () => {exportJSON()}),
-              ],
-            )
-          ],
-        )
-      ],
-    ));
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                              child: Text("Preview"),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: chosenColors["button"],
+                                  foregroundColor: chosenColors["buttonText"]),
+                              onPressed: () => {
+                                    setState(() => {isPreviewPageShown = true})
+                                  }),
+                          SizedBox(width: 10),
+                          ElevatedButton(
+                              child: Text("Export JSON"),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: chosenColors["button"],
+                                  foregroundColor: chosenColors["buttonText"]),
+                              onPressed: () => {exportJSON()}),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ))
+            ],
+          ),
+        )));
   }
 
   void exportJSON() async {

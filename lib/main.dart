@@ -24,17 +24,17 @@ class _CustomThemeState extends State<CustomTheme> {
     "sm": {
       "colorsGridSize": 2,
       "colorsPickerWidth": 100,
-      "colorsPickerHeight": 100
+      "colorsPickerHeight": 50
     },
     "md": {
       "colorsGridSize": 3,
       "colorsPickerWidth": 100,
-      "colorsPickerHeight": 150,
+      "colorsPickerHeight": 50,
     },
     "lg": {
       "colorsGridSize": 3,
       "colorsPickerWidth": 180,
-      "colorsPickerHeight": 150
+      "colorsPickerHeight": 50
     }
   };
   List<String> colors = [
@@ -113,30 +113,12 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayLarge": false
   };
   Map<String, dynamic> stylesValues = {
-    "bodySmall": {
-      "fontSize": TextEditingController(text: "10"),
-      "fontWeight": 300
-    },
-    "bodyMedium": {
-      "fontSize": TextEditingController(text: "20"),
-      "fontWeight": 300
-    },
-    "bodyLarge": {
-      "fontSize": TextEditingController(text: "30"),
-      "fontWeight": 300
-    },
-    "displaySmall": {
-      "fontSize": TextEditingController(text: "35"),
-      "fontWeight": 300
-    },
-    "displayMedium": {
-      "fontSize": TextEditingController(text: "46"),
-      "fontWeight": 300
-    },
-    "displayLarge": {
-      "fontSize": TextEditingController(text: "55"),
-      "fontWeight": 300
-    }
+    "bodySmall": {"fontSize": 10, "fontWeight": 300},
+    "bodyMedium": {"fontSize": 20, "fontWeight": 300},
+    "bodyLarge": {"fontSize": 30, "fontWeight": 300},
+    "displaySmall": {"fontSize": 35, "fontWeight": 300},
+    "displayMedium": {"fontSize": 46, "fontWeight": 300},
+    "displayLarge": {"fontSize": 55, "fontWeight": 300}
   };
   Map<String, String> stylesExplanation = {
     "bodySmall": "Normal text smallest size - e.g: 10px sized",
@@ -149,10 +131,8 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayLarge": "Headline text large sized e.g.: 56 px (title)"
   };
 
-  TextEditingController buttonFontSizeController =
-      TextEditingController(text: "16");
-  TextEditingController buttonPaddingController =
-      TextEditingController(text: "20");
+  double buttonFontSize = 16;
+  double buttonPadding = 20;
 
   int fontWeightActive = 300;
   bool activeBorderForInputs = false;
@@ -213,28 +193,22 @@ class _CustomThemeState extends State<CustomTheme> {
                 selectableFont,
                 TextTheme(
                   bodyLarge: TextStyle(
-                      fontSize: double.parse(
-                          stylesValues["bodyLarge"]["fontSize"].text)),
+                      fontSize: stylesValues["bodyLarge"]["fontSize"]),
                   bodyMedium: TextStyle(
-                      fontSize: double.parse(
-                          stylesValues["bodyMedium"]["fontSize"].text)),
+                      fontSize: stylesValues["bodyMedium"]["fontSize"]),
                   bodySmall: TextStyle(
-                      fontSize: double.parse(
-                          stylesValues["bodySmall"]["fontSize"].text)),
+                      fontSize: stylesValues["bodySmall"]["fontSize"]),
                   displayLarge: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: double.parse(
-                          stylesValues["displayLarge"]["fontSize"].text)),
+                      fontSize: stylesValues["displayLarge"]["fontSize"]),
                   displayMedium: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: double.parse(
-                          stylesValues["displayMedium"]["fontSize"].text)),
+                      fontSize: stylesValues["displayMedium"]["fontSize"]),
                   displaySmall: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: double.parse(
-                          stylesValues["displayLarge"]["fontSize"].text)),
+                      fontSize: stylesValues["displaySmall"]["fontSize"]),
                 )),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
@@ -259,7 +233,8 @@ class _CustomThemeState extends State<CustomTheme> {
                     child: Center(
                       child: Text(
                         "Colors",
-                        style: Theme.of(context).textTheme.displayMedium,
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -283,7 +258,9 @@ class _CustomThemeState extends State<CustomTheme> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(color),
+                              Text(color,
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               SizedBox(height: 10),
                               Text(colorExplanation[color] != null
                                   ? colorExplanation[color]!
@@ -315,9 +292,11 @@ class _CustomThemeState extends State<CustomTheme> {
                                             padding: const EdgeInsets.only(
                                                 left: 16, right: 16),
                                             child: SizedBox(
-                                              width: 250,
-                                              height: 400,
+                                              width: 350,
                                               child: HueRingPicker(
+                                                  portraitOnly: true,
+                                                  displayThumbColor: true,
+                                                  enableAlpha: true,
                                                   pickerColor:
                                                       chosenColors[color]!,
                                                   onColorChanged: (color) =>
@@ -355,12 +334,14 @@ class _CustomThemeState extends State<CustomTheme> {
                     ],
                   ),
                   Divider(),
+                  SizedBox(height: 20),
                   Center(
                     child: Column(
                       children: [
                         Text(
                           "Styles",
-                          style: Theme.of(context).textTheme.displayMedium,
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -371,7 +352,7 @@ class _CustomThemeState extends State<CustomTheme> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Theme",
-                            style: Theme.of(context).textTheme.displaySmall),
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -411,10 +392,8 @@ class _CustomThemeState extends State<CustomTheme> {
                     children: [
                       Container(
                         padding: EdgeInsets.only(top: 50, left: 50),
-                        child: Text(
-                          "Typography",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
+                        child: Text("Typography",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 50.0),
@@ -422,7 +401,6 @@ class _CustomThemeState extends State<CustomTheme> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(height: 50),
-                            Text("Font family: "),
                             Tooltip(
                               child: DropdownButton(
                                   value: selectableFont,
@@ -459,74 +437,44 @@ class _CustomThemeState extends State<CustomTheme> {
                       Padding(
                         padding: const EdgeInsets.only(left: 50.0, right: 50.0),
                         child: Center(
-                          child: ExpansionPanelList(
-                            expansionCallback: (panelIndex, isExpanded) =>
-                                setState(() => stylesExpanded[stylesExpanded
-                                    .keys
-                                    .toList()[panelIndex]] = !isExpanded),
-                            children: styles
-                                .map((style) => ExpansionPanel(
-                                    canTapOnHeader: true,
-                                    headerBuilder: (context, value) =>
-                                        ListTile(title: Text(style)),
-                                    body: Column(
-                                      children: [
-                                        Text("This is: " +
-                                            stylesExplanation[style]!),
-                                        SizedBox(
-                                            width: 200,
-                                            child: TextField(
-                                              controller: stylesValues[style]
-                                                  ["fontSize"],
-                                              decoration: InputDecoration(
-                                                  labelText:
-                                                      "Enter here size: "),
-                                            )),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Text("Is it bold ?"),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Radio(
-                                              groupValue: stylesValues[style]
-                                                  ["fontWeight"],
-                                              onChanged: (e) => {
-                                                print(e),
-                                                setState(() => {
-                                                      stylesValues[style]
-                                                          ["fontWeight"] = 700
-                                                    })
-                                              },
-                                              value: 700,
-                                            ),
-                                            Text("YES"),
-                                            Radio(
-                                              groupValue: stylesValues[style]
-                                                  ["fontWeight"],
-                                              onChanged: (e) => {
-                                                print(e),
-                                                setState(() => {
-                                                      stylesValues[style]
-                                                          ["fontWeight"] = 300
-                                                    })
-                                              },
-                                              value: 300,
-                                            ),
-                                            Text("NO"),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    isExpanded: stylesExpanded[style]!))
-                                .toList(),
-                          ),
-                        ),
+                            child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: styles.length,
+                          itemBuilder: (context, index) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(styles[index],
+                                    style: TextStyle(
+                                        fontSize: stylesValues[styles[index]]
+                                            ["fontSize"])),
+                                Text(stylesExplanation[styles[index]]!,
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge),
+                                SizedBox(height: 20),
+                                Text("Font Size",
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  width: 250,
+                                  child: Slider(
+                                    divisions: 9,
+                                    min: 1,
+                                    max: 100,
+                                    label:
+                                        "${stylesValues[styles[index]]["fontSize"]}",
+                                    onChanged: (val) => {
+                                      setState(() => {
+                                            stylesValues[styles[index]]
+                                                ["fontSize"] = val,
+                                          })
+                                    },
+                                    value: stylesValues[styles[index]]
+                                        ["fontSize"],
+                                  ),
+                                )
+                              ]),
+                        )),
                       ),
                       SizedBox(height: 20),
                       Padding(
@@ -535,38 +483,49 @@ class _CustomThemeState extends State<CustomTheme> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Buttons",
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
                               SizedBox(
                                 width: 250,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(height: 10),
+                                    Text("Font size",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge),
+                                    Slider(
+                                      onChanged: (value) =>
+                                          {buttonFontSize = value},
+                                      min: 0,
+                                      max: 30,
+                                      label: "${buttonFontSize}",
+                                      divisions: 9,
+                                      value: buttonFontSize,
+                                    ),
+                                    Text("Button size",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge),
                                     Slider(
                                       onChanged: (value) => {
-                                        buttonFontSizeController =
-                                            TextEditingController(
-                                                text: value.toString()),
+                                        buttonPadding = value,
                                       },
                                       min: 0,
                                       max: 30,
-                                      value: double.parse(
-                                          buttonFontSizeController.text),
+                                      label: "${buttonPadding}",
+                                      divisions: 5,
+                                      value: buttonPadding,
                                     ),
-                                    TextField(
-                                        keyboardType: TextInputType.number,
-                                        controller: buttonPaddingController,
-                                        decoration: InputDecoration(
-                                            labelText:
-                                                "Enter here inner size of a button: "))
                                   ],
                                 ),
                               ),
                               SizedBox(height: 20),
                               Text("Input Fields",
                                   style:
-                                      Theme.of(context).textTheme.displaySmall),
+                                      TextStyle(fontWeight: FontWeight.bold)),
                               SizedBox(height: 10),
-                              Text("Outline border on Input fields"),
                               Row(
                                 children: [
                                   Radio(
@@ -577,7 +536,18 @@ class _CustomThemeState extends State<CustomTheme> {
                                     },
                                     value: true,
                                   ),
-                                  Text("YES"),
+                                  SizedBox(
+                                    width: 350,
+                                    height: 20,
+                                    child: TextField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.all(5),
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)))),
+                                    ),
+                                  ),
                                   Radio(
                                     groupValue: activeBorderForInputs,
                                     onChanged: (e) => {
@@ -586,7 +556,15 @@ class _CustomThemeState extends State<CustomTheme> {
                                     },
                                     value: false,
                                   ),
-                                  Text("NO"),
+                                  SizedBox(
+                                    width: 350,
+                                    height: 20,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.all(5)),
+                                      enabled: false,
+                                    ),
+                                  ),
                                 ],
                               )
                             ]),
@@ -631,14 +609,14 @@ class _CustomThemeState extends State<CustomTheme> {
 
     json["Fonts"] = {};
     json["Fonts"]["textTheme"] = selectableFont;
-    json["Fonts"]["buttonFontSize"] = buttonFontSizeController.text;
-    json["Fonts"]["buttonPadding"] = buttonPaddingController.text;
+    json["Fonts"]["buttonFontSize"] = buttonFontSize;
+    json["Fonts"]["buttonPadding"] = buttonPadding;
 
     styles.forEach((style) {
       if (style != null) {
         json["Fonts"][style] = {};
         json["Fonts"][style]["fontSize"] =
-            int.parse(stylesValues[style]["fontSize"].text);
+            int.parse(stylesValues[style]["fontSize"]);
         json["Fonts"][style]["fontWeight"] =
             int.parse(stylesValues[style]["fontWeight"]);
       }

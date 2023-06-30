@@ -23,8 +23,8 @@ class _CustomThemeState extends State<CustomTheme> {
   Map<String, dynamic> breakpointsSettings = {
     "sm": {
       "colorsGridSize": 2,
-      "colorsPickerWidth": 100,
-      "colorsPickerHeight": 50
+      "colorsPickerWidth": 70,
+      "colorsPickerHeight": 40
     },
     "md": {
       "colorsGridSize": 3,
@@ -79,8 +79,7 @@ class _CustomThemeState extends State<CustomTheme> {
     "hover": Colors.blue
   };
   Map<String, String> colorExplanation = {
-    "primary":
-        "It is the main color throughout the whole design style. Includes top banner, input field  selected color,",
+    "primary": "It is the main color throughout the whole design style.",
     "accent": "Secondary color of the app",
     "card": "Color of the component Card",
     "button": "Button background color",
@@ -242,96 +241,99 @@ class _CustomThemeState extends State<CustomTheme> {
                       padding: const EdgeInsets.only(left: 40, right: 40),
                       child: Text("Choose color for each setup: ")),
                   SizedBox(height: 30),
-                  GridView.count(
-                    crossAxisCount: breakpointsSettings[
-                            Breakpoints.getCurrentDevice(context)]
-                        ["colorsGridSize"],
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        MediaQuery.of(context).size.height,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(left: 40, right: 40),
-                    children: [
-                      for (var color in colors) ...[
-                        Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(color,
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              SizedBox(height: 10),
-                              Text(colorExplanation[color] != null
-                                  ? colorExplanation[color]!
-                                  : "N/A"),
-                              SizedBox(height: 10),
-                              InkWell(
-                                onTap: () => {
-                                  showDialog(
-                                      context: context,
-                                      builder: (builder) {
-                                        return AlertDialog(
-                                          actions: [
-                                            ElevatedButton(
-                                                onPressed: () => {
-                                                      setState(() => {
-                                                            chosenColors[
-                                                                    color!] =
-                                                                selectable
-                                                          }),
-                                                      Navigator.of(context)
-                                                          .pop()
-                                                    },
-                                                child: Text("Save"))
-                                          ],
-                                          title:
-                                              Text("$color :: Pick a color:: "),
-                                          content: SingleChildScrollView(
-                                              child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 16, right: 16),
-                                            child: SizedBox(
-                                              width: 350,
-                                              child: HueRingPicker(
-                                                  portraitOnly: true,
-                                                  displayThumbColor: true,
-                                                  enableAlpha: true,
-                                                  pickerColor:
-                                                      chosenColors[color]!,
-                                                  onColorChanged: (color) =>
-                                                      {selectable = color}),
-                                            ),
-                                          )),
-                                        );
-                                      })
-                                },
-                                child: Container(
-                                    width: breakpointsSettings[
-                                        Breakpoints.getCurrentDevice(
-                                            context)]["colorsPickerWidth"],
-                                    height: breakpointsSettings[
-                                        Breakpoints.getCurrentDevice(
-                                            context)]["colorsPickerHeight"],
-                                    child: Center(
-                                      child: Text("Change color",
-                                          style: TextStyle(
-                                              color: chosenColors[
-                                                  "onPrimaryContainer"])),
-                                    ),
-                                    color: color != ""
-                                        ? Color.fromRGBO(
-                                            chosenColors[color]!.red,
-                                            chosenColors[color]!.green,
-                                            chosenColors[color]!.blue,
-                                            0.95)
-                                        : Colors.blue),
-                              ),
-                            ],
+                  SingleChildScrollView(
+                    child: GridView.count(
+                      crossAxisCount: breakpointsSettings[
+                              Breakpoints.getCurrentDevice(context)]
+                          ["colorsGridSize"],
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: MediaQuery.of(context).size.width /
+                          MediaQuery.of(context).size.height,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                      children: [
+                        for (var color in colors) ...[
+                          Card(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(color,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                                SizedBox(height: 10),
+                                Text(colorExplanation[color] != null
+                                    ? colorExplanation[color]!
+                                    : "N/A"),
+                                SizedBox(height: 10),
+                                InkWell(
+                                  onTap: () => {
+                                    showDialog(
+                                        context: context,
+                                        builder: (builder) {
+                                          return AlertDialog(
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () => {
+                                                        setState(() => {
+                                                              chosenColors[
+                                                                      color!] =
+                                                                  selectable
+                                                            }),
+                                                        Navigator.of(context)
+                                                            .pop()
+                                                      },
+                                                  child: Text("Save"))
+                                            ],
+                                            title: Text(
+                                                "$color :: Pick a color:: "),
+                                            content: SingleChildScrollView(
+                                                child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16, right: 16),
+                                              child: SizedBox(
+                                                width: 350,
+                                                child: HueRingPicker(
+                                                    portraitOnly: true,
+                                                    displayThumbColor: true,
+                                                    enableAlpha: true,
+                                                    pickerColor:
+                                                        chosenColors[color]!,
+                                                    onColorChanged: (color) =>
+                                                        {selectable = color}),
+                                              ),
+                                            )),
+                                          );
+                                        })
+                                  },
+                                  child: Container(
+                                      width: breakpointsSettings[
+                                          Breakpoints.getCurrentDevice(
+                                              context)]["colorsPickerWidth"],
+                                      height: breakpointsSettings[
+                                          Breakpoints.getCurrentDevice(
+                                              context)]["colorsPickerHeight"],
+                                      child: Center(
+                                        child: Text("Change color",
+                                            style: TextStyle(
+                                                color: chosenColors[
+                                                    "onPrimaryContainer"])),
+                                      ),
+                                      color: color != ""
+                                          ? Color.fromRGBO(
+                                              chosenColors[color]!.red,
+                                              chosenColors[color]!.green,
+                                              chosenColors[color]!.blue,
+                                              0.95)
+                                          : Colors.blue),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ]
-                    ],
+                        ]
+                      ],
+                    ),
                   ),
                   Divider(),
                   SizedBox(height: 20),
@@ -537,7 +539,7 @@ class _CustomThemeState extends State<CustomTheme> {
                                     value: true,
                                   ),
                                   SizedBox(
-                                    width: 350,
+                                    width: 100,
                                     height: 20,
                                     child: TextField(
                                       enabled: false,
@@ -557,7 +559,7 @@ class _CustomThemeState extends State<CustomTheme> {
                                     value: false,
                                   ),
                                   SizedBox(
-                                    width: 350,
+                                    width: 100,
                                     height: 20,
                                     child: TextField(
                                       decoration: InputDecoration(

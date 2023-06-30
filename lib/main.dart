@@ -460,7 +460,12 @@ class _CustomThemeState extends State<CustomTheme> {
                                 Text(styles[index],
                                     style: TextStyle(
                                         fontSize: stylesValues[styles[index]]
-                                            ["fontSize"])),
+                                            ["fontSize"],
+                                        fontWeight: stylesValues[styles[index]]
+                                                    ["fontWeight"] ==
+                                                300
+                                            ? FontWeight.w300
+                                            : FontWeight.w700)),
                                 Text(stylesExplanation[styles[index]]!,
                                     style:
                                         Theme.of(context).textTheme.labelLarge),

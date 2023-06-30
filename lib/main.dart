@@ -230,7 +230,9 @@ class _CustomThemeState extends State<CustomTheme> {
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: chosenColors["button"],
-                    foregroundColor: chosenColors["buttonText"]))),
+                    foregroundColor: chosenColors["buttonText"],
+                    textStyle: TextStyle(fontSize: buttonFontSize),
+                    padding: EdgeInsets.all(buttonPadding)))),
         home: Scaffold(
             body: SingleChildScrollView(
           child: Column(
@@ -544,8 +546,10 @@ class _CustomThemeState extends State<CustomTheme> {
                                             .textTheme
                                             .labelLarge),
                                     Slider(
-                                      onChanged: (value) =>
-                                          {buttonFontSize = value},
+                                      onChanged: (value) => {
+                                        setState(
+                                            () => {buttonFontSize = value}),
+                                      },
                                       min: 0,
                                       max: 30,
                                       label: "${buttonFontSize}",
@@ -558,7 +562,9 @@ class _CustomThemeState extends State<CustomTheme> {
                                             .labelLarge),
                                     Slider(
                                       onChanged: (value) => {
-                                        buttonPadding = value,
+                                        setState(() => {
+                                              buttonPadding = value,
+                                            }),
                                       },
                                       min: 0,
                                       max: 30,

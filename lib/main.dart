@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app/helper/hex_color.dart';
 import 'dart:convert';
 import 'package:app/helper/breakpoints.dart';
+import 'package:app/widgets/font_weight.dart';
 
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
@@ -115,19 +116,17 @@ class _CustomThemeState extends State<CustomTheme> {
     "bodySmall": {"fontSize": 10, "fontWeight": 300},
     "bodyMedium": {"fontSize": 20, "fontWeight": 300},
     "bodyLarge": {"fontSize": 30, "fontWeight": 300},
-    "displaySmall": {"fontSize": 35, "fontWeight": 300},
-    "displayMedium": {"fontSize": 46, "fontWeight": 300},
-    "displayLarge": {"fontSize": 55, "fontWeight": 300}
+    "displaySmall": {"fontSize": 35, "fontWeight": 700},
+    "displayMedium": {"fontSize": 46, "fontWeight": 700},
+    "displayLarge": {"fontSize": 55, "fontWeight": 700}
   };
   Map<String, String> stylesExplanation = {
-    "bodySmall": "Normal text smallest size - e.g: 10px sized",
-    "bodyMedium": "Normal text medium sized - e.g: 16px sized",
-    "bodyLarge": "Normal text large sized - e.g: 22px sized",
-    "displaySmall":
-        "Headline text smallest sized e.g: 34px (subtitle of a title's title)",
-    "displayMedium":
-        "Headline text medium sized e.g: 44px (subtitle of a title)",
-    "displayLarge": "Headline text large sized e.g.: 56 px (title)"
+    "bodySmall": "Normal text smallest size",
+    "bodyMedium": "Normal text medium sized",
+    "bodyLarge": "Normal text large sized",
+    "displaySmall": "Headline text smallest sized",
+    "displayMedium": "Headline text medium sized",
+    "displayLarge": "Headline text large sized"
   };
 
   double buttonFontSize = 16;
@@ -135,6 +134,8 @@ class _CustomThemeState extends State<CustomTheme> {
 
   int fontWeightActive = 300;
   bool activeBorderForInputs = false;
+
+  double weight = 0, changeableWeight = 700;
 
   void generateJSONColors() {
     Map<String, String> json = {};
@@ -192,21 +193,38 @@ class _CustomThemeState extends State<CustomTheme> {
                 selectableFont,
                 TextTheme(
                   bodyLarge: TextStyle(
-                      fontSize: stylesValues["bodyLarge"]["fontSize"]),
+                      fontSize: stylesValues["bodyLarge"]["fontSize"],
+                      fontWeight: stylesValues["bodyLarge"]["fontWeight"] == 700
+                          ? FontWeight.w700
+                          : FontWeight.w300),
                   bodyMedium: TextStyle(
-                      fontSize: stylesValues["bodyMedium"]["fontSize"]),
+                      fontSize: stylesValues["bodyMedium"]["fontSize"],
+                      fontWeight:
+                          stylesValues["bodyMedium"]["fontWeight"] == 700
+                              ? FontWeight.w700
+                              : FontWeight.w300),
                   bodySmall: TextStyle(
-                      fontSize: stylesValues["bodySmall"]["fontSize"]),
+                      fontSize: stylesValues["bodySmall"]["fontSize"],
+                      fontWeight: stylesValues["bodySmall"]["fontWeight"] == 700
+                          ? FontWeight.w700
+                          : FontWeight.w300),
                   displayLarge: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: stylesValues["displayLarge"]["fontSize"]),
+                      fontSize: stylesValues["displayLarge"]["fontSize"],
+                      fontWeight:
+                          stylesValues["displayLarge"]["fontWeight"] == 700
+                              ? FontWeight.w700
+                              : FontWeight.w300),
                   displayMedium: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight:
+                          stylesValues["displayMedium"]["fontWeight"] == 700
+                              ? FontWeight.w700
+                              : FontWeight.w300,
                       fontSize: stylesValues["displayMedium"]["fontSize"]),
                   displaySmall: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight:
+                          stylesValues["displaySmall"]["fontWeight"] == 700
+                              ? FontWeight.w700
+                              : FontWeight.w300,
                       fontSize: stylesValues["displaySmall"]["fontSize"]),
                 )),
             elevatedButtonTheme: ElevatedButtonThemeData(
@@ -314,12 +332,6 @@ class _CustomThemeState extends State<CustomTheme> {
                                       height: breakpointsSettings[
                                           Breakpoints.getCurrentDevice(
                                               context)]["colorsPickerHeight"],
-                                      child: Center(
-                                        child: Text("Change color",
-                                            style: TextStyle(
-                                                color: chosenColors[
-                                                    "onPrimaryContainer"])),
-                                      ),
                                       color: color != ""
                                           ? Color.fromRGBO(
                                               chosenColors[color]!.red,
@@ -453,27 +465,56 @@ class _CustomThemeState extends State<CustomTheme> {
                                     style:
                                         Theme.of(context).textTheme.labelLarge),
                                 SizedBox(height: 20),
-                                Text("Font Size",
+                                Text(
+                                    "Font Size: ${stylesValues[styles[index]]["fontSize"]}",
                                     style:
                                         Theme.of(context).textTheme.labelLarge),
                                 SizedBox(height: 10),
-                                SizedBox(
-                                  width: 250,
-                                  child: Slider(
-                                    divisions: 9,
-                                    min: 1,
-                                    max: 100,
-                                    label:
-                                        "${stylesValues[styles[index]]["fontSize"]}",
-                                    onChanged: (val) => {
-                                      setState(() => {
-                                            stylesValues[styles[index]]
-                                                ["fontSize"] = val,
-                                          })
-                                    },
-                                    value: stylesValues[styles[index]]
-                                        ["fontSize"],
-                                  ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 250,
+                                      child: Slider(
+                                        divisions: 9,
+                                        min: 1,
+                                        max: 100,
+                                        label:
+                                            "${stylesValues[styles[index]]["fontSize"]}",
+                                        onChanged: (val) => {
+                                          setState(() => {
+                                                stylesValues[styles[index]]
+                                                    ["fontSize"] = val,
+                                              })
+                                        },
+                                        value: stylesValues[styles[index]]
+                                            ["fontSize"],
+                                      ),
+                                    ),
+                                    CustomFontWeight(
+                                        isSelected: stylesValues[styles[index]]
+                                                    ["fontWeight"] ==
+                                                700
+                                            ? true
+                                            : false,
+                                        callback: () => {
+                                              weight =
+                                                  stylesValues[styles[index]]
+                                                      ["fontWeight"],
+                                              if (weight == 300)
+                                                {
+                                                  changeableWeight = 700,
+                                                }
+                                              else
+                                                {
+                                                  changeableWeight = 300,
+                                                },
+                                              setState(() => {
+                                                    stylesValues[styles[index]]
+                                                            ["fontWeight"] =
+                                                        changeableWeight,
+                                                  })
+                                            }),
+                                  ],
                                 )
                               ]),
                         )),
@@ -493,7 +534,7 @@ class _CustomThemeState extends State<CustomTheme> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(height: 10),
-                                    Text("Font size",
+                                    Text("Font size: ${buttonFontSize}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelLarge),
@@ -506,7 +547,7 @@ class _CustomThemeState extends State<CustomTheme> {
                                       divisions: 9,
                                       value: buttonFontSize,
                                     ),
-                                    Text("Button size",
+                                    Text("Button size: ${buttonPadding}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelLarge),
@@ -575,14 +616,14 @@ class _CustomThemeState extends State<CustomTheme> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton(
-                              child: Text("Preview"),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: chosenColors["button"],
-                                  foregroundColor: chosenColors["buttonText"]),
-                              onPressed: () => {
-                                    setState(() => {isPreviewPageShown = true})
-                                  }),
+                          // ElevatedButton(
+                          //     child: Text("Preview"),
+                          //     style: ElevatedButton.styleFrom(
+                          //         backgroundColor: chosenColors["button"],
+                          //         foregroundColor: chosenColors["buttonText"]),
+                          //     onPressed: () => {
+                          //           setState(() => {isPreviewPageShown = true})
+                          //         }),
                           SizedBox(width: 10),
                           ElevatedButton(
                               child: Text("Export JSON"),
@@ -617,10 +658,8 @@ class _CustomThemeState extends State<CustomTheme> {
     styles.forEach((style) {
       if (style != null) {
         json["Fonts"][style] = {};
-        json["Fonts"][style]["fontSize"] =
-            int.parse(stylesValues[style]["fontSize"]);
-        json["Fonts"][style]["fontWeight"] =
-            int.parse(stylesValues[style]["fontWeight"]);
+        json["Fonts"][style]["fontSize"] = stylesValues[style]["fontSize"];
+        json["Fonts"][style]["fontWeight"] = stylesValues[style]["fontWeight"];
       }
     });
     json["Styles"] = {};

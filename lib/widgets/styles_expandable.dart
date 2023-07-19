@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class StylesExpandable extends StatefulWidget {
   final Map<String, Color> chosenColors;
-  final Function(String, dynamic, dynamic) setDynamicValues;
+  final Function(String, Map<String, dynamic>, dynamic) setDynamicValues;
   String themeSelectableItem;
   String selectableFont;
   List<String> styles;
@@ -59,7 +59,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                       setState(() => {
                             widget.themeSelectableItem = e!,
                             widget.setDynamicValues(
-                                "themeSelectableItem", null, e)
+                                "themeSelectableItem", {}, e)
                           })
                     },
                     value: "Bright",
@@ -75,7 +75,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                       setState(() => {
                             widget.themeSelectableItem = e!,
                             widget.setDynamicValues(
-                                "themeSelectableItem", null, e)
+                                "themeSelectableItem", {}, e)
                           })
                     },
                     value: "Dark",
@@ -113,7 +113,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                               setState(() => {
                                     widget.selectableFont = item!,
                                     widget.setDynamicValues(
-                                        "selectableFont", null, item)
+                                        "selectableFont", {}, item)
                                   })
                             }),
                     message: "Check www.fonts.google.com",
@@ -251,7 +251,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                               setState(() => {
                                     buttonFontSize = value,
                                     widget.setDynamicValues(
-                                        "buttonFontSize", null, value)
+                                        "buttonFontSize", {}, value)
                                   }),
                             },
                             min: 0,
@@ -267,7 +267,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                               setState(() => {
                                     buttonPadding = value,
                                     widget.setDynamicValues(
-                                        "buttonPadding", null, value)
+                                        "buttonPadding", {}, value)
                                   }),
                             },
                             min: 0,
@@ -293,7 +293,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                             setState(() => {
                                   activeBorderForInputs = e!,
                                   widget.setDynamicValues(
-                                      "activeBorderForInputs", null, e)
+                                      "activeBorderForInputs", {}, e)
                                 })
                           },
                           value: true,
@@ -316,7 +316,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                             setState(() => {
                                   activeBorderForInputs = e!,
                                   widget.setDynamicValues(
-                                      "activeBorderForInputs", null, e)
+                                      "activeBorderForInputs", {}, e)
                                 })
                           },
                           value: false,

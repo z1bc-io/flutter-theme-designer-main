@@ -175,7 +175,7 @@ class _CustomThemeState extends State<CustomTheme> {
                   }
                 else if (key == "stylesValues")
                   {
-                    stylesValues[config["style"][config["property"]]] = value,
+                    stylesValues[config["style"]][config["property"]] = value,
                   }
                 else if (key == "buttonFontSize")
                   {

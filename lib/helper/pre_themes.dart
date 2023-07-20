@@ -100,7 +100,7 @@ class PreThemes {
       value = blueLarge;
     }
     return {
-      theme: {
+      "theme": {
         "brightness": theme.contains("Dark") ? "Dark" : "Light",
         "value": value,
       }

@@ -323,9 +323,9 @@ class _CustomThemeState extends State<CustomTheme> {
                                     selectableTheme = item!,
                                     gotTheme =
                                         PreThemes.getTheme(selectableTheme),
-                                    chosenColors = gotTheme["value"],
+                                    chosenColors = gotTheme["theme"]["value"],
                                     themeSelectableItem =
-                                        gotTheme["brightness"],
+                                        gotTheme["theme"]["brightness"],
                                   })
                             }),
                     SizedBox(height: 20),

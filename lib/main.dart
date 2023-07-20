@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app/helper/hex_color.dart';
 import 'dart:convert';
 
+import 'helper/pre_themes.dart';
+
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
 }
@@ -126,6 +128,16 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayLarge": "Headline text large sized"
   };
 
+  List<String> customThemes = [
+    "Grey and Yellow",
+    "Green",
+    "BW",
+    "Blue",
+    "Blue Large",
+    "Blue Dark"
+  ];
+  dynamic gotTheme = {};
+  String selectableTheme = "Blue";
   List<String> config = ["Colors", "Styles"];
 
   Map<String, bool> expandableList = {"Colors": false, "Styles": false};
@@ -289,7 +301,47 @@ class _CustomThemeState extends State<CustomTheme> {
                 title: Text("Theme Designer",
                     style: TextStyle(color: Colors.white)),
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 50),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Choose from the following",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 20),
+                    DropdownButton(
+                        value: selectableTheme,
+                        items: customThemes
+                            .map((theme) => DropdownMenuItem(
+                                  child: Text(theme),
+                                  value: theme,
+                                ))
+                            .toList(),
+                        onChanged: (item) => {
+                              setState(() => {
+                                    selectableTheme = item!,
+                                    gotTheme =
+                                        PreThemes.getTheme(selectableTheme),
+                                    chosenColors = gotTheme["value"],
+                                    themeSelectableItem =
+                                        gotTheme["brightness"],
+                                  })
+                            }),
+                    SizedBox(height: 20),
+                    Text("OR",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 20),
+                    Text("Style custom",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 10),
+                    Icon(Icons.arrow_downward_rounded),
+                    SizedBox(height: 30),
+                  ],
+                ),
+              ),
               ExpansionPanelList(
                   expansionCallback: (int index, bool isExpanded) {
                     setState(() => {
@@ -299,12 +351,16 @@ class _CustomThemeState extends State<CustomTheme> {
                   children: [
                     for (var item in config) ...[
                       ExpansionPanel(
+                        canTapOnHeader: true,
                         headerBuilder: (BuildContext context, bool isExpanded) {
-                          return Center(
-                              child: Text(item,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold)));
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 60.0),
+                            child: Center(
+                                child: Text(item,
+                                    style: TextStyle(
+                                        fontSize: 23,
+                                        fontWeight: FontWeight.bold))),
+                          );
                         },
                         body: expandableContent[item],
                         isExpanded: expandableList[item]!,

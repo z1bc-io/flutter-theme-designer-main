@@ -1,13 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:app/widgets/colors_expandable.dart';
 import 'package:app/widgets/styles_expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:app/helper/hex_color.dart';
 import 'dart:convert';
-
 import 'helper/pre_themes.dart';
+import 'package:app/services/downloader.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+import 'dart:io';
 
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
@@ -112,12 +115,12 @@ class _CustomThemeState extends State<CustomTheme> {
     "displayLarge": false
   };
   Map<String, dynamic> stylesValues = {
-    "bodySmall": {"fontSize": 10, "fontWeight": 300},
-    "bodyMedium": {"fontSize": 20, "fontWeight": 300},
-    "bodyLarge": {"fontSize": 30, "fontWeight": 300},
-    "displaySmall": {"fontSize": 35, "fontWeight": 700},
-    "displayMedium": {"fontSize": 46, "fontWeight": 700},
-    "displayLarge": {"fontSize": 55, "fontWeight": 700}
+    "bodySmall": {"fontSize": 10.0, "fontWeight": 300},
+    "bodyMedium": {"fontSize": 20.0, "fontWeight": 300},
+    "bodyLarge": {"fontSize": 30.0, "fontWeight": 300},
+    "displaySmall": {"fontSize": 35.0, "fontWeight": 700},
+    "displayMedium": {"fontSize": 46.0, "fontWeight": 700},
+    "displayLarge": {"fontSize": 55.0, "fontWeight": 700}
   };
   Map<String, String> stylesExplanation = {
     "bodySmall": "Normal text smallest size",
@@ -423,17 +426,9 @@ class _CustomThemeState extends State<CustomTheme> {
 
     final bytes = utf8.encode(encoded);
 
-    await launchUrl(
-        Uri.parse(
-            "data:application/octet-stream;charset=utf-16le;base64,${base64Encode(bytes)}"),
-        mode: LaunchMode.externalApplication);
+    DownloadService service =
+        kIsWeb ? WebDownloadService() : MobileDownloadService();
 
-    // final blob = Blob([bytes]);
-    // final url = Url.createObjectUrlFromBlob(blob);
-
-    // AnchorElement anchor = AnchorElement()
-    //   ..download = "Config.txt"
-    //   ..href = url;
-    // anchor.click();
+    await service.download(bytes: bytes);
   }
 }

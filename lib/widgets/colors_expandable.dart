@@ -20,18 +20,18 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
   Map<String, dynamic> breakpointsSettings = {
     "sm": {
       "colorsGridSize": 2,
-      "colorsPickerWidth": 30,
-      "colorsPickerHeight": 30
+      "colorsPickerWidth": 30.0,
+      "colorsPickerHeight": 30.0
     },
     "md": {
       "colorsGridSize": 3,
-      "colorsPickerWidth": 35,
-      "colorsPickerHeight": 35,
+      "colorsPickerWidth": 35.0,
+      "colorsPickerHeight": 35.0,
     },
     "lg": {
       "colorsGridSize": 3,
-      "colorsPickerWidth": 35,
-      "colorsPickerHeight": 35
+      "colorsPickerWidth": 35.0,
+      "colorsPickerHeight": 35.0
     }
   };
   List<String> colors = [

@@ -38,6 +38,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   google_fonts: ^4.0.4
   file_saver: ^0.2.4
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:

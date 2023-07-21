@@ -1,8 +1,8 @@
 import 'package:app/widgets/colors_expandable.dart';
 import 'package:app/widgets/styles_expandable.dart';
 import 'package:flutter/material.dart';
-import 'dart:html';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/helper/hex_color.dart';
 import 'dart:convert';
@@ -165,6 +165,7 @@ class _CustomThemeState extends State<CustomTheme> {
     Map<String, dynamic> expandableContent = {
       "Colors": ColorsExpandable(
           context: context,
+          chosenColors: chosenColors,
           onCallback: (color, value) => {
                 setState(() => {chosenColors[color!] = value}),
               }),
@@ -421,12 +422,18 @@ class _CustomThemeState extends State<CustomTheme> {
     String encoded = jsonEncode(json);
 
     final bytes = utf8.encode(encoded);
-    final blob = Blob([bytes]);
-    final url = Url.createObjectUrlFromBlob(blob);
 
-    AnchorElement anchor = AnchorElement()
-      ..download = "Config.txt"
-      ..href = url;
-    anchor.click();
+    await launchUrl(
+        Uri.parse(
+            "data:application/octet-stream;charset=utf-16le;base64,${base64Encode(bytes)}"),
+        mode: LaunchMode.externalApplication);
+
+    // final blob = Blob([bytes]);
+    // final url = Url.createObjectUrlFromBlob(blob);
+
+    // AnchorElement anchor = AnchorElement()
+    //   ..download = "Config.txt"
+    //   ..href = url;
+    // anchor.click();
   }
 }

@@ -5,8 +5,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 class ColorsExpandable extends StatefulWidget {
   final BuildContext context;
   final Function(String, Color) onCallback;
+  final Map<String, Color> chosenColors;
   const ColorsExpandable(
-      {super.key, required this.context, required this.onCallback});
+      {super.key,
+      required this.context,
+      required this.onCallback,
+      required this.chosenColors});
 
   @override
   State<ColorsExpandable> createState() => _ColorsExpandableState();
@@ -49,23 +53,6 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
   ];
   Color selectable = Colors.blue;
 
-  Map<String, Color> chosenColors = {
-    "primary": Colors.blue,
-    "accent": Colors.blue,
-    "card": Color.fromRGBO(247, 242, 250, 1),
-    "button": Colors.blue,
-    "buttonText": Colors.black,
-    "error": Colors.blue,
-    "primaryContainer": Colors.grey,
-    "divider": Colors.blue,
-    "icon": Colors.blue,
-    "radioFill": Colors.blue,
-    "onPrimaryContainer": Color.fromARGB(144, 97, 97, 97),
-    "onPrimary": Colors.black,
-    "onSecondary": Colors.black,
-    "onError": Colors.blue,
-    "hover": Colors.blue
-  };
   Map<String, String> colorExplanation = {
     "primary": "It is the main color throughout the whole design style.",
     "accent": "Secondary color of the app",
@@ -141,8 +128,8 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                         ElevatedButton(
                                             onPressed: () => {
                                                   setState(() => {
-                                                        chosenColors[color!] =
-                                                            selectable
+                                                        widget.chosenColors[
+                                                            color!] = selectable
                                                       }),
                                                   widget.onCallback(
                                                       color, selectable),
@@ -163,7 +150,8 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                               portraitOnly: true,
                                               displayThumbColor: true,
                                               enableAlpha: true,
-                                              pickerColor: chosenColors[color]!,
+                                              pickerColor:
+                                                  widget.chosenColors[color]!,
                                               onColorChanged: (color) =>
                                                   {selectable = color}),
                                         ),
@@ -180,9 +168,9 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                     ["colorsPickerHeight"],
                                 color: color != ""
                                     ? Color.fromRGBO(
-                                        chosenColors[color]!.red,
-                                        chosenColors[color]!.green,
-                                        chosenColors[color]!.blue,
+                                        widget.chosenColors[color]!.red,
+                                        widget.chosenColors[color]!.green,
+                                        widget.chosenColors[color]!.blue,
                                         0.95)
                                     : Colors.blue),
                           ),

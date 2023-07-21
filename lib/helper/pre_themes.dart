@@ -19,21 +19,21 @@ class PreThemes {
     "hover": Color.fromRGBO(16, 52, 166, 1)
   };
   static Map<String, Color> greyAndYellow = {
-    "primary": Color.fromRGBO(30, 144, 255, 1),
-    "accent": Color.fromRGBO(30, 144, 255, 1),
-    "card": Color.fromRGBO(255, 255, 255, 1),
-    "button": Color.fromRGBO(16, 52, 166, 1),
+    "primary": Color.fromRGBO(255, 231, 20, 1),
+    "accent": Color.fromRGBO(255, 231, 20, 1),
+    "card": Color.fromRGBO(107, 107, 107, 1),
+    "button": Color.fromRGBO(107, 107, 107, 1),
     "buttonText": Colors.black,
     "error": Colors.red,
-    "primaryContainer": Color.fromRGBO(30, 144, 255, 1),
+    "primaryContainer": Color.fromRGBO(107, 107, 107, 1),
     "divider": Colors.black,
-    "icon": Color.fromRGBO(30, 144, 255, 1),
-    "radioFill": Color.fromRGBO(30, 144, 255, 1),
+    "icon": Colors.black,
+    "radioFill": Color.fromRGBO(255, 231, 20, 1),
     "onPrimaryContainer": Colors.black,
     "onPrimary": Colors.white,
     "onSecondary": Colors.white,
     "onError": Colors.black,
-    "hover": Color.fromRGBO(16, 52, 166, 1)
+    "hover": Color.fromRGBO(255, 250, 202, 1)
   };
   static Map<String, Color> bW = {
     "primary": Colors.black,
@@ -55,7 +55,7 @@ class PreThemes {
   static Map<String, Color> green = {
     "primary": Color.fromRGBO(109, 211, 100, 1),
     "accent": Color.fromRGBO(109, 211, 100, 1),
-    "card": Color.fromRGBO(109, 211, 100, 1),
+    "card": Color.fromRGBO(109, 211, 100, 0.75),
     "button": Color.fromRGBO(41, 158, 31, 1),
     "buttonText": Colors.black,
     "error": Colors.red,
@@ -72,7 +72,7 @@ class PreThemes {
   static Map<String, Color> blueLarge = {
     "primary": Color.fromRGBO(30, 144, 255, 1),
     "accent": Color.fromRGBO(30, 144, 255, 1),
-    "card": Color.fromRGBO(255, 255, 255, 1),
+    "card": Color.fromRGBO(255, 255, 255, 0.75),
     "button": Color.fromRGBO(16, 52, 166, 1),
     "buttonText": Colors.black,
     "error": Colors.red,

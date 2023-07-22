@@ -96,7 +96,7 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
               for (var color in colors) ...[
                 Card(
                   semanticContainer: true,
-                  color: Colors.white,
+                  color: widget.chosenColors["primaryContainer"],
                   shadowColor: Colors.grey[700],
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: 20,
@@ -110,13 +110,13 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                         children: [
                           Text(color,
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                                  fontWeight: FontWeight.bold, fontSize: 19)),
                           SizedBox(height: 10),
                           Text(
                               colorExplanation[color] != null
                                   ? colorExplanation[color]!
                                   : "N/A",
-                              style: TextStyle(fontSize: 16)),
+                              style: TextStyle(fontSize: 19)),
                           SizedBox(height: 10),
                           InkWell(
                             onTap: () => {

@@ -4,7 +4,7 @@ class PreThemes {
   static Map<String, Color> darkBlue = {
     "primary": Color.fromRGBO(30, 144, 255, 1),
     "accent": Color.fromRGBO(30, 144, 255, 1),
-    "card": Color.fromRGBO(255, 255, 255, 1),
+    "card": Color.fromRGBO(36, 25, 25, 1),
     "button": Color.fromRGBO(16, 52, 166, 1),
     "buttonText": Colors.black,
     "error": Colors.red,

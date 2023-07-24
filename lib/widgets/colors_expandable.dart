@@ -97,7 +97,7 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                 Card(
                   semanticContainer: true,
                   color: widget.chosenColors["primaryContainer"],
-                  shadowColor: Colors.grey[700],
+                  shadowColor: Colors.white,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: 20,
                   child: Padding(
@@ -160,19 +160,22 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                   })
                             },
                             child: Container(
-                                width: breakpointsSettings[
-                                        Breakpoints.getCurrentDevice(context)]
-                                    ["colorsPickerWidth"],
-                                height: breakpointsSettings[
-                                        Breakpoints.getCurrentDevice(context)]
-                                    ["colorsPickerHeight"],
-                                color: color != ""
-                                    ? Color.fromRGBO(
-                                        widget.chosenColors[color]!.red,
-                                        widget.chosenColors[color]!.green,
-                                        widget.chosenColors[color]!.blue,
-                                        0.95)
-                                    : Colors.blue),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  color: color != ""
+                                      ? Color.fromRGBO(
+                                          widget.chosenColors[color]!.red,
+                                          widget.chosenColors[color]!.green,
+                                          widget.chosenColors[color]!.blue,
+                                          0.95)
+                                      : Colors.blue),
+                              width: breakpointsSettings[
+                                      Breakpoints.getCurrentDevice(context)]
+                                  ["colorsPickerWidth"],
+                              height: breakpointsSettings[
+                                      Breakpoints.getCurrentDevice(context)]
+                                  ["colorsPickerHeight"],
+                            ),
                           ),
                         ],
                       ),

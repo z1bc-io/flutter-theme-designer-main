@@ -8,8 +8,8 @@ import 'helper/pre_themes.dart';
 import 'package:app/services/downloader.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-// import 'package:app/services/mobile_downloader.dart'; //mobile
-import 'package:app/services/web_downloader.dart';
+import 'package:app/services/mobile_downloader.dart'; //mobile
+// import 'package:app/services/web_downloader.dart';
 
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
@@ -424,8 +424,8 @@ class _CustomThemeState extends State<CustomTheme> {
 
     final bytes = utf8.encode(encoded);
 
-    DownloadService service = WebDownloadService();
+    DownloadService service = MobileDownloadService();
 
-    await service.download(bytes: bytes);
+    await service.download(bytes: bytes, content: encoded);
   }
 }

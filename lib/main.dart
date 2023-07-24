@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:app/widgets/colors_expandable.dart';
 import 'package:app/widgets/styles_expandable.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,8 @@ import 'helper/pre_themes.dart';
 import 'package:app/services/downloader.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-import 'dart:io';
+// import 'package:app/services/mobile_downloader.dart'; //mobile
+import 'package:app/services/web_downloader.dart';
 
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
@@ -136,7 +135,6 @@ class _CustomThemeState extends State<CustomTheme> {
     "Green",
     "BW",
     "Blue",
-    "Blue Large",
     "Blue Dark"
   ];
   dynamic gotTheme = {};
@@ -426,8 +424,7 @@ class _CustomThemeState extends State<CustomTheme> {
 
     final bytes = utf8.encode(encoded);
 
-    DownloadService service =
-        kIsWeb ? WebDownloadService() : MobileDownloadService();
+    DownloadService service = WebDownloadService();
 
     await service.download(bytes: bytes);
   }

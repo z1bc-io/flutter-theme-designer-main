@@ -125,6 +125,7 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                   context: widget.context,
                                   builder: (builder) {
                                     return AlertDialog(
+                                      backgroundColor: Colors.grey,
                                       actions: [
                                         ElevatedButton(
                                             onPressed: () => {

@@ -78,7 +78,8 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
           child: Column(children: [
         Container(
             padding: const EdgeInsets.only(left: 40, right: 40),
-            child: Text("Choose color for each setup: ")),
+            child: Text("Choose color for each setup: ",
+                style: TextStyle(fontSize: 19))),
         SizedBox(height: 30),
         SingleChildScrollView(
           child: GridView.count(

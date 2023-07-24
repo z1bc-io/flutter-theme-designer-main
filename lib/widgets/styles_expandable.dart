@@ -265,7 +265,7 @@ class _StylesExpandableState extends State<StylesExpandable> {
                         SizedBox(
                           width: 250,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 10),
                               Text("Font size: ${buttonFontSize}",

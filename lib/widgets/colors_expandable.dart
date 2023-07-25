@@ -122,10 +122,13 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                           InkWell(
                             onTap: () => {
                               showDialog(
-                                  context: widget.context,
+                                  context: context,
                                   builder: (builder) {
                                     return AlertDialog(
-                                      backgroundColor: Colors.grey,
+                                      elevation: 5,
+                                      backgroundColor: Colors.white,
+                                      actionsAlignment:
+                                          MainAxisAlignment.center,
                                       actions: [
                                         ElevatedButton(
                                             onPressed: () => {
@@ -135,27 +138,43 @@ class _ColorsExpandableState extends State<ColorsExpandable> {
                                                       }),
                                                   widget.onCallback(
                                                       color, selectable),
-                                                  Navigator.of(widget.context)
-                                                      .pop()
+                                                  Navigator.of(builder).pop()
                                                 },
-                                            child: Text("Save"))
+                                            child: Text("Save")),
+                                        SizedBox(width: 20),
+                                        ElevatedButton(
+                                            onPressed: () =>
+                                                {Navigator.of(builder).pop()},
+                                            child: Text("Close"))
                                       ],
-                                      title: Text("$color :: Pick a color:: ",
-                                          style: TextStyle(fontSize: 16)),
                                       content: SingleChildScrollView(
                                           child: Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 16, right: 16),
-                                        child: SizedBox(
-                                          width: 350,
-                                          child: HueRingPicker(
-                                              portraitOnly: true,
-                                              displayThumbColor: true,
-                                              enableAlpha: true,
-                                              pickerColor:
-                                                  widget.chosenColors[color]!,
-                                              onColorChanged: (color) =>
-                                                  {selectable = color}),
+                                            left: 16,
+                                            right: 16,
+                                            top: 20,
+                                            bottom: 20),
+                                        child: Column(
+                                          children: [
+                                            Text("$color :: Pick a color:: ",
+                                                style: TextStyle(fontSize: 16)),
+                                            Breakpoints.getCurrentDevice(
+                                                        context) ==
+                                                    "lg"
+                                                ? HueRingPicker(
+                                                    portraitOnly: true,
+                                                    pickerColor: widget
+                                                        .chosenColors[color]!,
+                                                    onColorChanged: (color) =>
+                                                        {selectable = color})
+                                                : ColorPicker(
+                                                    portraitOnly: false,
+                                                    pickerColor: widget
+                                                        .chosenColors[color]!,
+                                                    onColorChanged: (color) =>
+                                                        {selectable = color}),
+                                            SizedBox(height: 20),
+                                          ],
                                         ),
                                       )),
                                     );

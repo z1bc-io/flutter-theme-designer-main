@@ -32,7 +32,7 @@ class MobileDownloadService implements DownloadService {
       File file = File('${dir.path}/$fileName');
       await file.writeAsString(content as String);
       Fluttertoast.showToast(
-          msg: "Successfully saved the file in: " + savedFolder + " folder",
+          msg: "Successfully saved the file in: \\" + savedFolder,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 3,

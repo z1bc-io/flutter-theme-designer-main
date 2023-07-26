@@ -33,12 +33,13 @@ class _FontWeightState extends State<CustomFontWeight> {
       child: Container(
         decoration: BoxDecoration(
             color: isSelected ? Colors.grey[600] : Colors.grey[300]),
-        width: 30,
-        height: 30,
+        width: 50,
+        height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("B", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text("B",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           ],
         ),
       ),

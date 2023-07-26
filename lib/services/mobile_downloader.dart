@@ -12,7 +12,7 @@ class MobileDownloadService implements DownloadService {
     // requests permission for downloading the file
     try {
       bool hasPermission = await _requestWritePermission();
-      if (!hasPermission) return;
+      if (!hasPermission) throw Exception("Did not authorized");
       // gets the directory where we will download the file.
       var dir = await getApplicationDocumentsDirectory();
 
@@ -26,7 +26,8 @@ class MobileDownloadService implements DownloadService {
 
       // You should put the name you want for the file here.
       // Take in account the extension.
-      String fileName = 'config-customly.txt';
+      String fileName =
+          'config-customly${DateTime.now().toIso8601String().replaceAll(RegExp(r':'), '-')}.txt';
 
       // saving the file
       File file = File('${dir.path}/$fileName');

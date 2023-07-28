@@ -1,15 +1,24 @@
+import 'dart:typed_data';
+
 import 'package:app/widgets/colors_expandable.dart';
 import 'package:app/widgets/styles_expandable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app/helper/hex_color.dart';
+import 'package:app/helper/hex_color_from_string.dart';
+
 import 'dart:convert';
 import 'helper/pre_themes.dart';
 import 'package:app/services/downloader.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io';
 
 // import 'package:app/services/mobile_downloader.dart'; //mobile
 import 'package:app/services/web_downloader.dart';
+
+import 'model/theme.dart';
 
 void main() {
   runApp(MaterialApp(home: CustomTheme()));
@@ -150,6 +159,53 @@ class _CustomThemeState extends State<CustomTheme> {
   bool activeBorderForInputs = false;
 
   double weight = 0, changeableWeight = 700;
+
+  void _startFilePicker(BuildContext? context) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: ["txt", "rtf"]);
+      if (result != null) {
+        dynamic file = result.files.single;
+        String fileContent = "";
+        String themeGot = "";
+        Uint8List data;
+
+        data = file.bytes as Uint8List;
+        fileContent = utf8.decode(data);
+        CustomThemeM theme = CustomThemeM().themeFromJson(fileContent);
+        Map<String, dynamic> colors = theme.colors!.toJson();
+        activeBorderForInputs = theme.styles?.outlineBorderInput as bool;
+        Map<String, dynamic> fonts = theme.fonts!.toJson();
+
+        themeGot = colors["Brightness"];
+        setState(() => {
+              colors.removeWhere((key, value) =>
+                  key == "primarySwatch" || key == "Brightness"),
+              chosenColors = colors.map((key, value) =>
+                  MapEntry(key, HexColorString(value as String))),
+              selectableFont = theme.fonts!.textTheme as String,
+              themeSelectableItem = themeGot,
+              buttonFontSize =
+                  double.parse(theme.fonts!.buttonFontSize.toString()),
+              buttonPadding =
+                  double.parse(theme.fonts!.buttonPadding.toString()),
+              styles.forEach((style) {
+                if (style != null) {
+                  stylesValues[style]["fontSize"] = fonts[style]["fontSize"];
+                  stylesValues[style]["fontWeight"] =
+                      fonts[style]["fontWeight"];
+                }
+              }),
+            });
+      }
+    } catch (error) {
+      Fluttertoast.showToast(
+          msg: error.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIosWeb: 5,
+          webShowClose: true);
+    }
+  }
 
   void generateJSONColors() {
     Map<String, String> json = {};
@@ -308,6 +364,11 @@ class _CustomThemeState extends State<CustomTheme> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    ElevatedButton(
+                      child: Text("UPLOAD THEME"),
+                      onPressed: () => _startFilePicker(context),
+                    ),
+                    SizedBox(height: 30),
                     Text("Choose from the following",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18)),

@@ -170,8 +170,17 @@ class _CustomThemeState extends State<CustomTheme> {
         String themeGot = "";
         Uint8List data;
 
-        data = file.bytes as Uint8List;
-        fileContent = utf8.decode(data);
+        if (!kIsWeb) {
+          file = File(file.path as String);
+          data = await file.readAsBytes();
+          fileContent = utf8.decode(data);
+        } else {
+          if (file.bytes != null) {
+            data = file.bytes as Uint8List;
+            fileContent = utf8.decode(data);
+          }
+        }
+
         CustomThemeM theme = CustomThemeM().themeFromJson(fileContent);
         Map<String, dynamic> colors = theme.colors!.toJson();
         activeBorderForInputs = theme.styles?.outlineBorderInput as bool;

@@ -1,48 +1,50 @@
+import 'package:app/helper/hex_color.dart';
 import 'package:flutter/material.dart';
+import 'package:app/helper/hex_color_from_string.dart';
 
 class PreThemes {
   static Map<String, Color> darkBlue = {
-    "primary": Color.fromRGBO(30, 144, 255, 1),
-    "accent": Color.fromRGBO(30, 144, 255, 1),
-    "card": Color.fromRGBO(36, 25, 25, 0.5),
-    "button": Color.fromRGBO(16, 52, 166, 1),
-    "buttonText": Colors.black,
+    "primary": HexColorString("#ff1e90ff"),
+    "accent": HexColorString("#ff1e90ff"),
+    "card": HexColorString("#7f241919"),
+    "button": HexColorString("#ff1034a6"),
+    "buttonText": Colors.white,
     "error": Colors.red,
-    "primaryContainer": Color.fromRGBO(30, 144, 255, 1),
+    "primaryContainer": HexColorString("#ff2a8ceb"),
     "divider": Colors.black,
-    "icon": Color.fromRGBO(30, 144, 255, 1),
-    "radioFill": Color.fromRGBO(30, 144, 255, 1),
+    "icon": HexColorString("#ff1e90ff"),
+    "radioFill": HexColorString("#ff1e90ff"),
     "onPrimaryContainer": Colors.black,
     "onPrimary": Colors.white,
     "onSecondary": Colors.white,
     "onError": Colors.black,
-    "hover": Color.fromRGBO(16, 52, 166, 1)
+    "hover": HexColorString("#ff1034a6"),
   };
   static Map<String, Color> greyAndYellow = {
-    "primary": Color.fromRGBO(255, 231, 20, 1),
-    "accent": Color.fromRGBO(255, 231, 20, 1),
-    "card": Color.fromRGBO(107, 107, 107, 1),
-    "button": Color.fromRGBO(107, 107, 107, 1),
+    "primary": HexColorString("#ffffe714"),
+    "accent": HexColorString("#ffffe714"),
+    "card": HexColorString("#ffbcbcbc"),
+    "button": HexColorString("#ff6b6b6b"),
     "buttonText": Colors.black,
     "error": Colors.red,
-    "primaryContainer": Color.fromRGBO(107, 107, 107, 1),
+    "primaryContainer": HexColorString("#ff6b6b6b"),
     "divider": Colors.black,
     "icon": Colors.black,
-    "radioFill": Color.fromRGBO(255, 231, 20, 1),
+    "radioFill": HexColorString("#ffffe714"),
     "onPrimaryContainer": Colors.black,
     "onPrimary": Colors.white,
-    "onSecondary": Colors.white,
+    "onSecondary": Colors.black,
     "onError": Colors.black,
-    "hover": Color.fromRGBO(255, 250, 202, 1)
+    "hover": HexColorString("#fffffaca")
   };
   static Map<String, Color> bW = {
     "primary": Colors.black,
     "accent": Colors.black,
     "card": Color.fromRGBO(255, 255, 255, 1),
-    "button": Color.fromRGBO(255, 255, 255, 1),
-    "buttonText": Colors.black,
+    "button": Colors.black,
+    "buttonText": Color.fromRGBO(255, 255, 255, 1),
     "error": Colors.red,
-    "primaryContainer": Color.fromRGBO(220, 220, 220, 1),
+    "primaryContainer": HexColorString("#ffb8b7b7"),
     "divider": Colors.black,
     "icon": Colors.black,
     "radioFill": Colors.black,
@@ -50,24 +52,24 @@ class PreThemes {
     "onPrimary": Colors.white,
     "onSecondary": Colors.black,
     "onError": Colors.black,
-    "hover": Color.fromRGBO(220, 220, 220, 1)
+    "hover": HexColorString("#ffdcdcdc")
   };
   static Map<String, Color> green = {
-    "primary": Color.fromRGBO(109, 211, 100, 1),
-    "accent": Color.fromRGBO(109, 211, 100, 1),
-    "card": Color.fromRGBO(109, 211, 100, 0.75),
-    "button": Color.fromRGBO(41, 158, 31, 1),
+    "primary": HexColorString("#ffa1ee9a"),
+    "accent": HexColorString("#ffa1ee9a"),
+    "card": HexColorString("#ffefffed"),
+    "button": HexColorString("#ff299e1f"),
     "buttonText": Colors.black,
     "error": Colors.red,
-    "primaryContainer": Color.fromRGBO(227, 255, 225, 1),
+    "primaryContainer": HexColorString("#ff77c672"),
     "divider": Colors.black,
     "icon": Colors.black,
-    "radioFill": Color.fromRGBO(109, 211, 100, 1),
+    "radioFill": HexColorString("#ff9ae094"),
     "onPrimaryContainer": Colors.black,
     "onPrimary": Colors.white,
     "onSecondary": Colors.black,
     "onError": Colors.black,
-    "hover": Color.fromRGBO(227, 255, 225, 1)
+    "hover": HexColorString("#ffe3ffe1")
   };
   static Map<String, Color> blueLarge = {
     "primary": Color.fromRGBO(30, 144, 255, 1),

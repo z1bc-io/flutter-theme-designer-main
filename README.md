@@ -1,16 +1,28 @@
-# app
+# Theme Designer
 
-A new Flutter project.
+[![themedesigner](http://forthebadge.com/images/badges/made-with-ruby.svg)](https://main.d3a5eqyieorqj5.amplifyapp.com/#/)
 
-## Getting Started
+Here goes overview of the app.
 
-This project is a starting point for a Flutter application.
+# Table of Contents
 
-A few resources to get you started if this is your first Flutter project:
+- [Usage](#usage)
+    - [Users](#users)
+    - [Developers](#developers)
+- [Demo](#demo)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Usage 
+Here is written the usage for the end users of the theme designer, and a developers to integrate it inside their app
+
+
+### Users
+
+
+### Developers
+
+
+
+
+---
+# Demo

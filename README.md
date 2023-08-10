@@ -29,8 +29,11 @@ Here is written the usage for the end users of the theme designer, and a develop
   1. To integrate our theme designer into your application, we will need firstly to install these flutter dependencies:
 **fluttertoast**, **google_fonts**, **provider**
 
-     Command for install: 
-      **flutter pub add fluttertoast google_fonts provider** 
+     **Command** for install: 
+
+     ```
+      flutter pub add fluttertoast google_fonts provider
+     ```
 
   2. After its installed, in the **lib** folder of app: 
       - Create **model** **folder** and **copy** our ([assets/code/model/theme.dart](./assets/code/model/theme.dart)) inside model folder
@@ -77,7 +80,7 @@ MaterialApp(
     ); 
 
   ```
- into this ::
+ into this:
 
  ```
 ChangeNotifierProvider(
@@ -92,11 +95,11 @@ ChangeNotifierProvider(
         }));
  ```
 
-ThemeProvider is a provider for changes pron to our theme (colors, text, spacing), the  defaultly theme is set to yellow  (check **theme_provider.dart**)
+- ThemeProvider is a provider for changes pron to our theme (colors, text, spacing), the  defaultly theme is set to yellow  (check **theme_provider.dart**)
 
-Inside ThemeProvider (**theme_provider.dart**) we have a function **setDynamicTheme** which we will use later to sent **CustomTheme** **model** which we imported earlier, 
+- Inside ThemeProvider (**theme_provider.dart**) we have a function **setDynamicTheme** which we will use later to sent **CustomTheme** **model** which we imported earlier, 
 
-The **CustomTheme** instance will need to be created in our consumer of the provider (**main.dart**) using our config.txt which we exported earlier in flutter-theme-designer and import into **assets/themes/config.txt**.
+- The **CustomTheme** instance will need to be created in our consumer of the provider (**main.dart**) using our config.txt which we exported earlier in flutter-theme-designer and import into **assets/themes/config.txt**.
 
 - Inside main.dart stateful app create function **_importTheme** which will use our config as main **theme** inside our app.
 
@@ -121,9 +124,9 @@ void _importTheme() async {
 
 ```
 
-Here is the full code of **main.dart** 
+- Here is the full code of **main.dart** 
 
-![image](./assets/images/pic_3_all_code.png)
+![full-code](./assets/images/pic_3_all_code.png)
 
 
 
@@ -133,8 +136,19 @@ Here is the full code of **main.dart**
 - Call the function **_importTheme** from a button using **onPressed** event
 - Use the color scheme inside app, e.g. Use the secondary color from the config in a text :: 
  
- ![image](./assets/images/pic_4_usage.png)
+ ![usage-code](./assets/images/pic_4_usage.png)
 
 
 ---
 # Demo
+
+<style type="text/css">
+    img {
+      width: 300px;
+    }
+
+    img[alt="full-code"] , img[alt="usage-code"] {
+      max-width: 100%;
+      width: 700px;
+    }
+</style>

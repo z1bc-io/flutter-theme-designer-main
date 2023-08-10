@@ -142,13 +142,3 @@ void _importTheme() async {
 ---
 # Demo
 
-<style type="text/css">
-    img {
-      width: 300px;
-    }
-
-    img[alt="full-code"] , img[alt="usage-code"] {
-      max-width: 100%;
-      width: 700px;
-    }
-</style>

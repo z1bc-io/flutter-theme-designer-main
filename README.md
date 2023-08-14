@@ -2,12 +2,17 @@
 
 [![themedesigner](http://forthebadge.com/images/badges/made-with-ruby.svg)](https://main.d3a5eqyieorqj5.amplifyapp.com/#/)
 
-Here goes overview of the app.
+Theme Designer app that allows you to meticulously modify your interface's theme elements using **Material Library**. From color palettes to text styles and spacing, you have the authority to adapt our default yellow theme or establish your own. This user-friendly tool requires no design proficiency – simply make selections, preview adjustments, and implement. Elevate your digital encounter with the calculated customization of Theme Designer.
 
 # Table of Contents
 
 - [Usage](#usage)
     - [Users](#users)
+        - `Choosing from the pre-defined themes`
+        - `Customize colors`
+        - `Customize text`
+        - `Export theme`
+        - `Update theme`
     - [Developers](#developers)
         - `Assets`
         - `Installation`
@@ -16,10 +21,65 @@ Here goes overview of the app.
 
 
 # Usage 
-Here is written the usage for the end users of the theme designer, and a developers to integrate it inside their app
+Here is written the usage for the users of the theme designer to style their own themes using **theme designer**, and a developers to integrate it inside their app
 
 
 ## Users
+
+You have two options:
+1. Choose default theme and export JSON file.
+2. Choose default theme and customize it for your liking.
+
+### Use cases
+
+  In the next pictures we will show **cases** of the app, what can be done to style theme: 
+
+- Choose theme
+- Customize color using color picker
+- Customize text styles
+- Export JSON file and update
+
+
+### Choosing from the pre-defined themes
+
+![choosing-pre-defined-theme](./assets/images/pic_1_user_chosee_theme.png)
+
+Here we are presented with the theme-designer pre-defined themes to make it easily to style your own theme. 
+
+### Customize colors
+
+![customize-pre-defined-theme](./assets/images/pic_2_user_colros.png)
+
+In the colors tab its shown flutter material **color scheme** for styling primary, secondary, radio fill color  and more...
+
+After we chose the color we want to change, it will pop up the modal for changin the new color.
+
+![customize-pre-defined-theme](./assets/images/pic_3_user_color_picker.png)
+
+### Customize text
+
+![customize-pre-defined-theme](./assets/images/pic_3_user_styles.png)
+
+In the style tab its shown properties to change:
+-  **mode** of theme (dark or bright), 
+-  **typography font used** (we can choose from the various fonts, all the fonts are used from the [link](www.fonts.google.com))
+-  **headlines & normal (small, medium, large) text** (we can change font size of the style using range slider, and a style of the text - bold )
+- **buttons styles** (we can change font size of a button inside, inner size of the button (to make it **large, sm, md**))
+- **input styles** (input style to make it round with **outline border** or not)
+
+![customize-pre-defined-theme](./assets/images/pic_4_styles_buttons.png)
+
+### Saving (exporting) theme
+
+![customize-pre-defined-theme](./assets/images/pic_6_export_theme.png)
+
+Theme is saved in a **JSON** config file.
+
+### Updating existing theme
+
+After the config for the theme is **Exported**, we can update that theme with **upload theme** functionality
+
+![customize-pre-defined-theme](./assets/images/pic_5_user_upload_theme.png)
 
 
 ## Developers

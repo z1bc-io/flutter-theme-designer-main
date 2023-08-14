@@ -62,7 +62,7 @@ After we chose the color we want to change, it will pop up the modal for changin
 
 In the style tab its shown properties to change:
 -  **mode** of theme (dark or bright), 
--  **typography font used** (we can choose from the various fonts, all the fonts are used from the [link](www.fonts.google.com))
+-  **typography font used** (we can choose from the various fonts, all the fonts are used from the [link](https://www.fonts.google.com))
 -  **headlines & normal (small, medium, large) text** (we can change font size of the style using range slider, and a style of the text - bold )
 - **buttons styles** (we can change font size of a button inside, inner size of the button (to make it **large, sm, md**))
 - **input styles** (input style to make it round with **outline border** or not)

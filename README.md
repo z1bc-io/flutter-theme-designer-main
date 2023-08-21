@@ -201,4 +201,6 @@ void _importTheme() async {
 
 ---
 # Demo
+Sample Web link to the Theme Designer tool ( for demo only)
+https://main.d3a5eqyieorqj5.amplifyapp.com/
 
